@@ -14,17 +14,14 @@ const { t } = useI18n()
       </div>
 
       <div class="grid md:grid-cols-3 gap-8 mb-12 reveal">
-        <a href="https://z.ai/" target="_blank" class="glass-card glass-card-glow glow-border p-10 text-center transition-all group block">
-          <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI" class="h-8 w-auto max-w-[160px] mx-auto mb-4 object-contain" />
-          <div class="text-sm text-gray-600 mt-1">GLM</div>
+        <a href="https://z.ai/" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+          <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
-        <a href="https://www.minimaxi.com" target="_blank" class="glass-card glass-card-glow glow-border p-10 text-center transition-all group block">
-          <img src="/sponsors/minimax-wide.webp" alt="MiniMax" class="h-8 w-auto max-w-[160px] mx-auto mb-4 object-contain" />
-          <div class="text-sm text-gray-600 mt-1">MiniMax</div>
+        <a href="https://www.minimaxi.com" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+          <img src="/sponsors/minimax-wide.webp" alt="MiniMax" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
-        <a href="https://www.kimi.com" target="_blank" class="glass-card glass-card-glow glow-border p-10 text-center transition-all group block">
-          <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI" class="h-8 w-auto max-w-[160px] mx-auto mb-4 object-contain" />
-          <div class="text-sm text-gray-600 mt-1">Kimi</div>
+        <a href="https://www.kimi.com" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+          <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
       </div>
 

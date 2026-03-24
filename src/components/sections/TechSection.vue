@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '../../composables/useI18n'
 
-const { t, locale } = useI18n()
-
-const aiModels = [
-  { name: 'GLM', byEn: 'Zhipu AI', byZh: '智谱 AI', icon: '/sponsors/zhipu-wide.webp', url: 'https://z.ai' },
-  { name: 'MiniMax', byEn: 'MiniMax', byZh: 'MiniMax', icon: '/sponsors/minimax-wide.webp', url: 'https://www.minimaxi.com' },
-  { name: 'Kimi', byEn: 'Moonshot AI', byZh: '月之暗面', icon: '/sponsors/kimi-wide.webp', url: 'https://www.kimi.com' },
-]
+const { t } = useI18n()
 
 const frameworks = [
   'MCP', 'A2A', 'ACP', 'OpenClaw', 'LangGraph', 'CrewAI',
@@ -28,16 +22,6 @@ const frameworks = [
         <p class="text-text-secondary leading-relaxed">
           {{ t('tech.desc_prefix') }}<span class="text-gray-900 font-semibold">{{ t('tech.desc_bold') }}</span>{{ t('tech.desc_suffix') }}
         </p>
-      </div>
-
-      <!-- AI Models -->
-      <div class="mb-16 reveal reveal-delay-2">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <a :href="model.url" target="_blank" v-for="model in aiModels" :key="model.name" class="glass-card glass-card-glow p-8 text-center hover:scale-105 transition-all group block">
-            <img :src="model.icon" :alt="model.name" class="h-8 w-auto max-w-[140px] mx-auto mb-3 object-contain" />
-            <div class="text-gray-600 text-sm mt-1">{{ locale === 'zh' ? model.byZh : model.byEn }}</div>
-          </a>
-        </div>
       </div>
 
       <!-- Frameworks -->

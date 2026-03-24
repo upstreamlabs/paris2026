@@ -17,8 +17,8 @@ const timeUnits = [
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
     <!-- Animated gradient background -->
     <div
-      class="absolute inset-0 opacity-10 animate-gradient-shift"
-      style="background: linear-gradient(-45deg, #2c3e6b, #16A085, #7c9ec9, #16A085); background-size: 400% 400%;"
+      class="absolute inset-0 opacity-8 animate-gradient-shift"
+      style="background: linear-gradient(-45deg, #4CAF50, #C8D84C, #E8D44D, #7CC9A0, #3BA7D0); background-size: 400% 400%;"
     ></div>
 
     <!-- Grid pattern overlay -->
@@ -33,6 +33,7 @@ const timeUnits = [
       style="background-image: url('/photos/gosim-stationf.jpg')"
     ></div>
 
+
     <!-- Content -->
     <div class="relative z-10 text-center px-6 max-w-6xl mx-auto pt-20">
 
@@ -44,11 +45,10 @@ const timeUnits = [
       </div>
 
       <!-- Main title -->
-      <h1 class="font-black leading-[0.9] mb-6 tracking-tight">
-        <span class="block text-6xl md:text-8xl lg:text-[10rem] shimmer-text" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.03em;"><span v-for="(letter, i) in 'GOSIM'" :key="i" class="bounce-letter" :style="{ animationDelay: `${i * 0.15}s` }">{{ letter }}</span></span>
-        <span class="block text-3xl md:text-5xl lg:text-7xl heading-serif font-medium text-gray-600 mt-2">Agentic</span>
-        <span class="block text-3xl md:text-5xl lg:text-7xl heading-serif font-medium text-gray-600">Hackathon</span>
-      </h1>
+      <div class="mb-6">
+        <div class="shimmer-text text-6xl md:text-8xl lg:text-[10rem]" style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; line-height: 0.9;">GOSIM</div>
+        <div class="heading-serif text-3xl md:text-5xl lg:text-7xl text-gray-600 mt-2">Agentic Hackathon</div>
+      </div>
 
       <!-- Tagline -->
       <p class="text-lg md:text-xl text-gray-500 font-light tracking-wide mt-4 mb-2 heading-serif" style="font-style: italic;">

@@ -114,8 +114,8 @@ export default {
     ],
   },
   tech: {
-    title: '体验',
-    titleAccent: '开放 AI',
+    title: '开源',
+    titleAccent: 'AI',
     desc_prefix: '在一个 AI 准入日益被资本把控的世界里，开源模型不仅仅是一种技术选择——它是对公平获取权的捍卫。通过在 GLM、Kimi、MiniMax 以及更广泛的开源生态上进行构建，参赛者不仅在使用强大的工具，也在表明一种立场：',
     desc_bold: '强大的 AI 应该属于每一个人',
     desc_suffix: '。',

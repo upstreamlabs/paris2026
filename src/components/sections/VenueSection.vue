@@ -45,16 +45,43 @@ const { t } = useI18n()
         </div>
       </div>
 
-      <!-- GOSIM past events -->
+      <!-- GOSIM past events - scrolling photo wall -->
       <div class="mt-20">
         <div class="text-center mb-10 reveal">
           <span class="text-xs text-text-secondary uppercase tracking-[0.2em]">{{ t('venue.pastEvents') }}</span>
           <h3 class="text-2xl font-black mt-2">{{ t('venue.pastEventsTitle') }}</h3>
         </div>
-        <div class="grid grid-cols-3 gap-4 reveal">
-          <img src="/photos/gosim-event-1.jpg" alt="GOSIM Event" class="w-full h-48 object-cover" />
-          <img src="/photos/gosim-event-2.jpg" alt="GOSIM Event" class="w-full h-48 object-cover" />
-          <img src="/photos/gosim-event-3.jpg" alt="GOSIM Event" class="w-full h-48 object-cover" />
+
+        <!-- Row 1: scroll left -->
+        <div class="relative overflow-hidden reveal">
+          <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-bg-primary to-transparent z-10"></div>
+          <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-bg-primary to-transparent z-10"></div>
+          <div class="flex gap-4 animate-marquee" style="animation-duration: 40s;">
+            <template v-for="n in 2" :key="n">
+              <img src="/photos/gosim-event-1.jpg" alt="GOSIM Event" class="w-72 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-2.jpg" alt="GOSIM Event" class="w-80 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-3.jpg" alt="GOSIM Event" class="w-64 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-stationf.jpg" alt="STATION F" class="w-72 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-2.jpg" alt="GOSIM Event" class="w-64 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-1.jpg" alt="GOSIM Event" class="w-80 h-44 object-cover rounded-lg shrink-0" />
+            </template>
+          </div>
+        </div>
+
+        <!-- Row 2: scroll right (reverse) -->
+        <div class="relative overflow-hidden mt-4 reveal reveal-delay-1">
+          <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-bg-primary to-transparent z-10"></div>
+          <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-bg-primary to-transparent z-10"></div>
+          <div class="flex gap-4 animate-marquee-reverse" style="animation-duration: 45s;">
+            <template v-for="n in 2" :key="n">
+              <img src="/photos/gosim-event-3.jpg" alt="GOSIM Event" class="w-80 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-stationf.jpg" alt="STATION F" class="w-64 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-1.jpg" alt="GOSIM Event" class="w-72 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-2.jpg" alt="GOSIM Event" class="w-80 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-event-3.jpg" alt="GOSIM Event" class="w-72 h-44 object-cover rounded-lg shrink-0" />
+              <img src="/photos/gosim-stationf.jpg" alt="STATION F" class="w-80 h-44 object-cover rounded-lg shrink-0" />
+            </template>
+          </div>
         </div>
       </div>
     </div>

@@ -6,7 +6,16 @@ const { t } = useI18n()
 
 <template>
   <section id="about" class="relative py-32 bg-bg-primary overflow-hidden">
-    <div class="max-w-4xl mx-auto px-6">
+    <!-- Background video with 4-edge fade -->
+    <div class="absolute inset-0 hidden md:block pointer-events-none" style="-webkit-mask-image: radial-gradient(ellipse 70% 60% at center, rgba(0,0,0,0.12) 0%, transparent 70%); mask-image: radial-gradient(ellipse 70% 60% at center, rgba(0,0,0,0.12) 0%, transparent 70%);">
+      <video
+        src="/photos/hero-video.mp4"
+        autoplay loop muted playsinline
+        class="w-full h-full object-cover"
+      ></video>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-6">
       <!-- Quote -->
       <div class="text-center mb-16 reveal">
         <blockquote class="heading-serif text-xl md:text-2xl text-gray-500 leading-relaxed">

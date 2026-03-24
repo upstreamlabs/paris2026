@@ -14,12 +14,12 @@
   --color-text-secondary: #374151;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
-  --animate-marquee: marquee 30s linear infinite;
-  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 45s linear infinite;
   --animate-bounce-slow: bounce-slow 3s infinite;
   --animate-gradient-shift: gradient-shift 8s ease infinite;
   --animate-shimmer: shimmer 3s ease-in-out infinite;
@@ -57,8 +57,8 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% { background-position: 0% center; }
+  100% { background-position: 100% center; }
 }
 
 /* Scrollbar */
@@ -84,9 +84,9 @@ body {
 
 /* Heading serif */
 .heading-serif {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
 }
 
 /* Card - Glassmorphism */
@@ -157,21 +157,23 @@ body {
   background: linear-gradient(
     120deg,
     #111827 0%,
-    #111827 38%,
-    #16A085 50%,
-    #111827 62%,
+    #111827 35%,
+    #4CAF50 42%,
+    #E8D44D 50%,
+    #3BA7D0 58%,
+    #111827 65%,
     #111827 100%
   );
-  background-size: 250% auto;
+  background-size: 300% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 6s ease-in-out infinite;
+  animation: shimmer 14s linear infinite alternate;
 }
 
 /* Gradient number */
 .gradient-number {
-  background: linear-gradient(135deg, #2c3e6b, #16A085);
+  background: linear-gradient(135deg, #4CAF50, #3BA7D0);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

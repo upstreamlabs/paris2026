@@ -114,8 +114,8 @@ export default {
     ],
   },
   tech: {
-    title: 'Experience',
-    titleAccent: 'Open AI',
+    title: 'Open Source',
+    titleAccent: 'AI',
     desc_prefix: 'In a world where AI access is increasingly controlled by capital, open-source models are not just a technology choice — they are a defense of fair access. By building on GLM, Kimi, MiniMax and the broader open ecosystem, participants are not only using powerful tools, but making a statement: ',
     desc_bold: 'powerful AI should belong to everyone',
     desc_suffix: '.',
