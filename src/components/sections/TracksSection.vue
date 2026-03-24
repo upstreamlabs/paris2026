@@ -51,7 +51,7 @@ const themes = [
           class="glass-card p-8 group hover:-translate-y-2 transition-all duration-300 reveal"
           :class="`reveal-delay-${i % 4 + 1}`"
         >
-          <span class="text-5xl font-black text-gray-100 group-hover:text-gray-200 transition-colors">{{ theme.number }}</span>
+          <span class="text-5xl font-black text-gray-500 group-hover:text-gray-600 transition-colors">{{ theme.number }}</span>
 
           <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4 group-hover:text-accent transition-colors">
             {{ theme.title }}

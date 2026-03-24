@@ -6,7 +6,7 @@
         <div class="reveal">
           <span class="text-xs text-text-secondary uppercase tracking-[0.2em]">Venue</span>
           <h2 class="text-4xl md:text-5xl font-black mt-4 mb-6">
-            STATION F<br /><span class="heading-serif font-medium text-gray-500">Paris</span>
+            STATION F<br /><span class="heading-serif font-medium text-gray-600">Paris</span>
           </h2>
           <p class="text-text-secondary leading-relaxed mb-6">
             The world's largest startup campus, located in the heart of Paris. Home to 1,000+ startups and the backdrop for the most exciting tech events in Europe.
@@ -16,12 +16,12 @@
               <div class="text-2xl font-black text-gray-900">1000+</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">Startups</div>
             </div>
-            <div class="w-px bg-white/10"></div>
+            <div class="w-px bg-gray-200"></div>
             <div>
               <div class="text-2xl font-black text-gray-900">34 000</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">m² Campus</div>
             </div>
-            <div class="w-px bg-white/10"></div>
+            <div class="w-px bg-gray-200"></div>
             <div>
               <div class="text-2xl font-black text-gray-900">13th</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">Arrondissement</div>

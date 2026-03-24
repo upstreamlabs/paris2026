@@ -39,7 +39,7 @@ onMounted(() => {
           class="glass-card p-6 flex items-center gap-6 reveal"
           :class="`reveal-delay-${i % 4 + 1}`"
         >
-          <span class="text-2xl font-mono font-bold text-gray-300 shrink-0">{{ c.icon }}</span>
+          <span class="text-2xl font-mono font-bold text-gray-500 shrink-0">{{ c.icon }}</span>
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between mb-2">
               <h3 class="font-bold text-gray-900">{{ c.name }}</h3>

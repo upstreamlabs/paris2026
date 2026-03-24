@@ -43,7 +43,7 @@ const schedule = {
           @click="activeDay = day"
           class="px-8 py-3 text-sm font-semibold tracking-wider uppercase transition-all border"
           :class="activeDay === day
-            ? 'bg-accent border-accent text-gray-900'
+            ? 'bg-accent border-accent text-white'
             : 'border-gray-200 bg-transparent text-text-secondary hover:text-gray-900 hover:border-gray-300'"
         >
           Day {{ day }} — May {{ day + 4 }} ({{ day === 1 ? 'Tuesday' : 'Wednesday' }})
@@ -61,7 +61,7 @@ const schedule = {
           class="relative flex gap-6 md:gap-8 mb-8 group"
         >
           <!-- Dot -->
-          <div class="absolute left-0 md:left-[133px] w-4 h-4 rounded-full bg-white border-2 border-gray-900-red group-hover:bg-gray-900 group-hover:scale-125 transition-all mt-1"></div>
+          <div class="absolute left-0 md:left-[133px] w-4 h-4 rounded-full bg-white border-2 border-gray-400 group-hover:bg-gray-900 group-hover:scale-125 transition-all mt-1"></div>
 
           <!-- Time -->
           <div class="hidden md:block w-[120px] text-right shrink-0">

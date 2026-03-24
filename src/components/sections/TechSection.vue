@@ -25,8 +25,7 @@ const frameworks = [
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
           <a :href="model.url" target="_blank" v-for="model in aiModels" :key="model.name" class="glass-card p-8 text-center hover:scale-105 transition-all group block">
             <img :src="model.icon" :alt="model.name" class="h-8 w-auto max-w-[120px] mx-auto mb-3 object-contain" />
-            <div class="text-xl font-bold text-gray-900 group-hover:text-gray-600 transition-colors">{{ model.name }}</div>
-            <div class="text-gray-500 text-sm mt-1">{{ model.by }}</div>
+            <div class="text-gray-600 text-sm mt-1">{{ model.by }}</div>
           </a>
         </div>
       </div>

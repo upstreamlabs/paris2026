@@ -170,7 +170,7 @@ function canJoin(team: Team) {
 function teamVibe(count: number) {
   if (count === 1) return { label: 'Fly Solo', color: 'text-amber-600' }
   if (count === 2) return { label: 'Dynamic Duo', color: 'text-blue-600' }
-  return { label: 'Three Musketeers', color: 'text-accent' }
+  return { label: 'Three Musketeers', color: 'text-emerald-600' }
 }
 
 function repoName(url: string) {
@@ -178,7 +178,7 @@ function repoName(url: string) {
   return m ? m[1] : url.replace(/https?:\/\//, '')
 }
 
-const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-accent/50 focus:outline-none transition-colors text-sm'
+const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-accent/50 focus:outline-none transition-colors text-sm'
 </script>
 
 <template>
@@ -192,7 +192,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 translate-y-4"
     >
-      <div v-if="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-3 rounded-full text-sm font-semibold shadow-lg backdrop-blur-xl" :class="toast.type === 'success' ? 'bg-accent/90 text-gray-900' : 'bg-red-600 text-gray-900'">
+      <div v-if="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-3 rounded-full text-sm font-semibold shadow-lg backdrop-blur-xl" :class="toast.type === 'success' ? 'bg-accent/90 text-white' : 'bg-red-600 text-white'">
         {{ toast.msg }}
       </div>
     </Transition>
@@ -237,7 +237,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
       </div>
 
       <div class="text-center mb-12 reveal">
-        <button @click="openCreateModal" :disabled="isFull" class="px-8 py-4 bg-accent text-gray-900 text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+        <button @click="openCreateModal" :disabled="isFull" class="px-8 py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           {{ isFull ? 'Registration Closed' : 'Register Your Team' }}
         </button>
       </div>
@@ -254,7 +254,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
           </div>
           <div class="flex items-center gap-2 mb-1">
             <span class="text-[10px] px-2 py-0.5 rounded-full bg-gray-50 font-semibold" :class="teamVibe(team.members.length).color">{{ teamVibe(team.members.length).label }}</span>
-            <span v-if="canJoin(team)" class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">+{{ 3 - team.members.length }} open</span>
+            <span v-if="canJoin(team)" class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">+{{ 3 - team.members.length }} open</span>
           </div>
 
           <div class="space-y-1.5">
@@ -301,7 +301,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
               <form @submit.prevent="submitCreate" class="space-y-5">
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Team Name <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Team Name <span class="text-accent-red">*</span></label>
                   <input v-model="teamName" type="text" required placeholder="e.g. AgentX" :class="inputClass" />
                 </div>
                 <!-- Team Avatar -->
@@ -317,24 +317,24 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                       </button>
                       <label class="w-9 h-9 rounded-full border-2 border-dashed border-gray-300 hover:border-gray-400 flex items-center justify-center cursor-pointer transition-all overflow-hidden" :class="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar) ? 'border-accent-red' : ''">
                         <img v-if="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar)" :src="teamAvatar" class="w-full h-full object-cover" />
-                        <span v-else class="text-gray-400 text-sm">+</span>
+                        <span v-else class="text-gray-500 text-sm">+</span>
                         <input type="file" accept="image/*" class="hidden" @change="uploadTeamAvatar($event)" />
                       </label>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Contact Email <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Contact Email <span class="text-accent-red">*</span></label>
                   <input v-model="contactEmail" type="email" required placeholder="team-lead@example.com" :class="inputClass" />
                   <p class="text-xs text-text-secondary mt-1">Not displayed publicly.</p>
                 </div>
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">GitHub Repository <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">GitHub Repository <span class="text-accent-red">*</span></label>
                   <input v-model="githubRepo" type="url" required placeholder="https://github.com/your-org/project" :class="inputClass" />
                 </div>
 
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Team Size <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Team Size <span class="text-accent-red">*</span></label>
                   <div class="flex gap-3">
                     <button v-for="n in 3" :key="n" type="button" @click="memberCount = n" class="flex-1 py-2.5 rounded-lg border font-semibold transition-all flex flex-col items-center gap-0.5" :class="memberCount === n ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'">
                       <span>{{ n }}</span>
@@ -345,7 +345,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
                 <!-- Members -->
                 <div>
-                  <label class="block text-sm text-text-secondary mb-2">Members <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-2">Members <span class="text-accent-red">*</span></label>
                   <div class="space-y-3">
                     <div v-for="(_, i) in members.slice(0, memberCount)" :key="i" class="p-3 rounded-lg bg-gray-50 border border-gray-100">
                       <p class="text-xs text-text-secondary mb-2">Member {{ i + 1 }} {{ i === 0 ? '(Team Lead)' : '' }}</p>
@@ -360,7 +360,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 </div>
 
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Track <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Track <span class="text-accent-red">*</span></label>
                   <select v-model="selectedTrack" required :class="[inputClass, 'appearance-none']">
                     <option value="" disabled class="bg-bg-primary">Select a track</option>
                     <option v-for="t in tracks" :key="t" :value="t" class="bg-bg-primary">{{ t }}</option>
@@ -382,7 +382,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   <textarea v-model="projectIdea" rows="2" placeholder="Briefly describe what you plan to build..." :class="[inputClass, 'resize-none']"></textarea>
                 </div>
 
-                <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-gray-900 text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
+                <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
                   {{ loading ? 'Registering...' : 'Submit Registration' }}
                 </button>
               </form>
@@ -398,15 +398,15 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
               <form @submit.prevent="submitJoin" class="space-y-5">
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Your Name <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Your Name <span class="text-accent-red">*</span></label>
                   <input v-model="joinName" type="text" required placeholder="Your name" :class="inputClass" />
                 </div>
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">GitHub / GitLab Username <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">GitHub / GitLab Username <span class="text-accent-red">*</span></label>
                   <input v-model="joinGithubId" type="text" required placeholder="e.g. octocat" :class="inputClass" />
                 </div>
                 <div>
-                  <label class="block text-sm text-text-secondary mb-1">Your Email <span class="text-accent">*</span></label>
+                  <label class="block text-sm text-text-secondary mb-1">Your Email <span class="text-accent-red">*</span></label>
                   <input v-model="joinEmail" type="email" required placeholder="your@email.com" :class="inputClass" />
                   <p class="text-xs text-text-secondary mt-1">Not displayed publicly.</p>
                 </div>
@@ -418,7 +418,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   </select>
                 </div>
 
-                <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-gray-900 text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
+                <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
                   {{ loading ? 'Joining...' : 'Join This Team' }}
                 </button>
               </form>

@@ -37,7 +37,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <!-- Logo — dark version for light bg -->
       <a href="#" class="flex items-center gap-3 group">
         <img src="/gosim-logo.svg" alt="GOSIM" class="h-7 w-auto" />
-        <span class="text-xs text-gray-500 font-light tracking-widest uppercase">Hackathon</span>
+        <span class="text-xs text-gray-600 font-light tracking-widest uppercase">Hackathon</span>
       </a>
 
       <!-- Desktop Nav -->
@@ -46,7 +46,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           v-for="item in navItems"
           :key="item.href"
           @click.prevent="scrollTo(item.href)"
-          class="text-sm text-gray-500 hover:text-gray-900 transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gray-900 after:transition-all hover:after:w-full"
+          class="text-sm text-gray-600 hover:text-gray-900 transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gray-900 after:transition-all hover:after:w-full"
         >
           {{ item.label }}
         </a>

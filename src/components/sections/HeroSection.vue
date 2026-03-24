@@ -25,7 +25,7 @@ const timeUnits = [
       <!-- Eyebrow -->
       <div class="inline-flex items-center gap-3 mb-10">
         <div class="h-px w-12 bg-gray-300"></div>
-        <span class="text-xs text-gray-500 font-light tracking-[0.2em] uppercase">Agentic AI Summit Paris · May 2026</span>
+        <span class="text-xs text-gray-600 font-light tracking-[0.2em] uppercase">Agentic AI Summit Paris · May 2026</span>
         <div class="h-px w-12 bg-gray-300"></div>
       </div>
 
@@ -39,7 +39,7 @@ const timeUnits = [
       <!-- Divider line -->
       <div class="flex items-center justify-center gap-6 my-10">
         <div class="h-px flex-1 max-w-24 bg-gray-200"></div>
-        <span class="text-xs text-gray-500 tracking-[0.25em] uppercase">May 5–6, 2026 · STATION F · Paris</span>
+        <span class="text-xs text-gray-600 tracking-[0.25em] uppercase">May 5–6, 2026 · STATION F · Paris</span>
         <div class="h-px flex-1 max-w-24 bg-gray-200"></div>
       </div>
 
@@ -49,7 +49,7 @@ const timeUnits = [
           <span class="text-4xl md:text-6xl font-black font-mono text-gray-900 tabular-nums">
             {{ String(unit.value.value).padStart(2, '0') }}
           </span>
-          <span class="text-[10px] text-gray-400 mt-1 uppercase tracking-[0.15em]">{{ unit.label }}</span>
+          <span class="text-[10px] text-gray-600 mt-1 uppercase tracking-[0.15em]">{{ unit.label }}</span>
         </div>
       </div>
 
@@ -61,28 +61,6 @@ const timeUnits = [
         Apply Now
       </a>
 
-      <!-- Stats row -->
-      <div class="flex justify-center gap-12 mt-16 text-center">
-        <div>
-          <div class="text-3xl font-black text-gray-900">100</div>
-          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Participants</div>
-        </div>
-        <div class="w-px bg-gray-200"></div>
-        <div>
-          <div class="text-3xl font-black text-gray-900">5</div>
-          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Themes</div>
-        </div>
-        <div class="w-px bg-gray-200"></div>
-        <div>
-          <div class="text-3xl font-black text-gray-900">2</div>
-          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Days</div>
-        </div>
-        <div class="w-px bg-gray-200"></div>
-        <div>
-          <div class="text-3xl font-black text-gray-900">3</div>
-          <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Sponsors</div>
-        </div>
-      </div>
     </div>
 
     <!-- Scroll indicator -->
