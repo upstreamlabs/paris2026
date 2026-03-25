@@ -145,7 +145,7 @@ export default {
     zhipuBy: '由智谱 AI 赞助',
     minimax: 'MiniMax 特别奖',
     minimaxBy: '由 MiniMax 赞助',
-    moonshot: 'Moonshot AI 特别奖',
+    moonshot: 'Moonshot 特别奖',
     moonshotBy: '由 Moonshot AI 赞助',
     allParticipants: '所有参赛者均可获得赞助商提供的',
     apiCredits: 'API 额度',

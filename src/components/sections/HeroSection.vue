@@ -27,11 +27,14 @@ const timeUnits = [
       style="background-image: linear-gradient(rgba(0,0,0,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.3) 1px, transparent 1px); background-size: 60px 60px;"
     ></div>
 
-    <!-- Background photo -->
-    <div
-      class="absolute inset-0 bg-cover bg-center opacity-20"
-      style="background-image: url('/photos/paris-tech.png');"
-    ></div>
+    <!-- Background video -->
+    <div class="absolute inset-0">
+      <video
+        autoplay loop muted playsinline
+        poster="/photos/hero-bg-poster.jpg"
+        class="w-full h-full object-cover opacity-25"
+      ><source src="/photos/hero-bg.mp4" type="video/mp4" /></video>
+    </div>
 
 
     <!-- Content -->

@@ -9,13 +9,13 @@ const { users, teams, fetchTeams } = useTeams()
 onMounted(() => fetchTeams())
 
 const tracks = [
-  { id: 'agents-meet-apps', label: 'Agents Meet Apps', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
-  { id: 'claws-octos', label: 'Claws & Octos', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
-  { id: 'hai', label: 'Human-Agent Interaction', icon: 'M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122' },
-  { id: 'education', label: 'Education', icon: 'M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5' },
-  { id: 'content-remix', label: 'Content Remixing', icon: 'M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z' },
-  { id: 'productivity', label: 'Productivity', icon: 'M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5' },
-  { id: 'agents-voices', label: 'Agents with Voices', icon: 'M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z' },
+  { id: 'agents-meet-apps', label: 'Agents Meet Apps', icon: '/icons/theme-01.svg' },
+  { id: 'claws-octos', label: 'Claws & Octos', icon: '/icons/theme-02.svg' },
+  { id: 'hai', label: 'Human-Agent Interaction', icon: '/icons/theme-03.svg' },
+  { id: 'education', label: 'Education', icon: '/icons/theme-04.svg' },
+  { id: 'content-remix', label: 'Content Remixing', icon: '/icons/theme-05.svg' },
+  { id: 'productivity', label: 'Productivity', icon: '/icons/theme-06.svg' },
+  { id: 'agents-voices', label: 'Agents with Voices', icon: '/icons/theme-07.svg' },
 ]
 
 const modelOptions = [
@@ -104,6 +104,9 @@ function openUserModal(user: User) {
             @{{ user.githubId.replace(/^@/, '') }}
           </a>
 
+          <!-- Bio -->
+          <p v-if="user.bio" class="text-[11px] text-text-secondary mb-2 line-clamp-2">"{{ user.bio }}"</p>
+
           <!-- Theme badges -->
           <div v-if="user.themes?.length" class="flex flex-wrap gap-1 mb-2">
             <span
@@ -112,7 +115,7 @@ function openUserModal(user: User) {
               class="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600"
               :title="getTrackLabel(theme)"
             >
-              <svg v-if="getTrackIcon(theme)" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" :d="getTrackIcon(theme)" /></svg>
+              <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
             </span>
           </div>
 
@@ -180,7 +183,7 @@ function openUserModal(user: User) {
               <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 font-semibold">Interested Themes</p>
               <div class="flex flex-wrap gap-2">
                 <span v-for="theme in viewingUser.themes" :key="theme" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-xs text-gray-600">
-                  <svg v-if="getTrackIcon(theme)" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" :d="getTrackIcon(theme)" /></svg>
+                  <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
                   {{ getTrackLabel(theme) }}
                 </span>
               </div>

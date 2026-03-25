@@ -28,19 +28,19 @@ const { t } = useI18n()
       <!-- Sponsor prizes -->
       <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto reveal reveal-delay-2">
         <div class="glass-card p-8 text-center hover:scale-105 transition-all group">
+          <svg class="w-12 h-12 mx-auto mb-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978" /><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978" /><path d="M18 9h1.5a1 1 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" /><path d="M6 9H4.5a1 1 0 0 1 0-5H6" /></svg>
           <h3 class="font-bold text-gray-900 text-lg mb-1">{{ t('awards.zhipu') }}</h3>
           <p class="text-text-secondary text-sm">{{ t('awards.zhipuBy') }}</p>
-          <div class="h-1 w-12 mx-auto mt-4 bg-accent rounded-full group-hover:w-20 transition-all"></div>
         </div>
         <div class="glass-card p-8 text-center hover:scale-105 transition-all group">
+          <svg class="w-12 h-12 mx-auto mb-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978" /><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978" /><path d="M18 9h1.5a1 1 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" /><path d="M6 9H4.5a1 1 0 0 1 0-5H6" /></svg>
           <h3 class="font-bold text-gray-900 text-lg mb-1">{{ t('awards.minimax') }}</h3>
           <p class="text-text-secondary text-sm">{{ t('awards.minimaxBy') }}</p>
-          <div class="h-1 w-12 mx-auto mt-4 bg-accent-blue rounded-full group-hover:w-20 transition-all"></div>
         </div>
         <div class="glass-card p-8 text-center hover:scale-105 transition-all group">
+          <svg class="w-12 h-12 mx-auto mb-4 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978" /><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978" /><path d="M18 9h1.5a1 1 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" /><path d="M6 9H4.5a1 1 0 0 1 0-5H6" /></svg>
           <h3 class="font-bold text-gray-900 text-lg mb-1">{{ t('awards.moonshot') }}</h3>
           <p class="text-text-secondary text-sm">{{ t('awards.moonshotBy') }}</p>
-          <div class="h-1 w-12 mx-auto mt-4 bg-blue-500 rounded-full group-hover:w-20 transition-all"></div>
         </div>
       </div>
 

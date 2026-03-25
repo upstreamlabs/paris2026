@@ -145,7 +145,7 @@ export default {
     zhipuBy: 'Sponsored by Zhipu AI',
     minimax: 'MiniMax Special Award',
     minimaxBy: 'Sponsored by MiniMax',
-    moonshot: 'Moonshot AI Special Award',
+    moonshot: 'Moonshot Special Award',
     moonshotBy: 'Sponsored by Moonshot AI',
     allParticipants: 'All participants receive',
     apiCredits: 'API credits',
