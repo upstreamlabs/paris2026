@@ -50,17 +50,11 @@ onMounted(() => {
           <p>
             {{ t('about.partOf') }} <a href="https://paris2026.gosim.org" target="_blank" class="text-text-primary font-semibold hover:text-accent-blue transition-colors">{{ t('about.partOfEvent') }}</a>{{ t('about.partOfSuffix') }}
           </p>
-          <p>
+          <p class="text-text-primary font-medium text-lg">
             {{ t('about.p1') }}
           </p>
           <p>
             {{ t('about.p2') }}
-          </p>
-          <p class="text-text-primary font-medium text-lg">
-            {{ t('about.p3') }}
-          </p>
-          <p>
-            <span class="font-semibold text-text-primary">{{ t('about.p4_prefix') }}</span>{{ t('about.p4') }}<span class="font-semibold text-text-primary">{{ t('about.p4_bold') }}</span>{{ t('about.p4_suffix') }}
           </p>
         </div>
 

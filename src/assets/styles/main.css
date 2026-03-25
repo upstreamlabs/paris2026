@@ -354,6 +354,67 @@ body {
   50% { box-shadow: 0 0 30px rgba(217, 119, 6, 0.15), 0 0 60px rgba(217, 119, 6, 0.08); }
 }
 
+/* === Medal === */
+.medal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.medal-ribbon {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--medal-color), transparent);
+  margin-bottom: -2px;
+  position: relative;
+}
+
+.medal-ribbon::before,
+.medal-ribbon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 14px;
+  height: 22px;
+  border-radius: 0 0 4px 4px;
+}
+
+.medal-ribbon::before {
+  right: 2px;
+  background: var(--medal-color);
+  opacity: 0.5;
+  transform: rotate(-15deg);
+  transform-origin: top center;
+}
+
+.medal-ribbon::after {
+  left: 2px;
+  background: var(--medal-color);
+  opacity: 0.5;
+  transform: rotate(15deg);
+  transform-origin: top center;
+}
+
+.medal-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--medal-color) 25%, #1c1f2b), #1c1f2b);
+  border: 3px solid var(--medal-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--medal-color) 30%, transparent),
+              inset 0 0 12px color-mix(in srgb, var(--medal-color) 10%, transparent);
+  position: relative;
+  z-index: 1;
+}
+
+.light .medal-circle {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--medal-color) 15%, #fff), #fff);
+}
+
 /* === Mouse follow glow on cards === */
 .glass-card-glow {
   position: relative;

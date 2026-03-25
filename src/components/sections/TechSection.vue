@@ -38,40 +38,6 @@ const frameworks = [
         </a>
       </div>
 
-      <!-- Frameworks -->
-      <div class="reveal reveal-delay-3">
-        <h3 class="text-center text-sm text-text-secondary uppercase tracking-wider mb-8">{{ t('tech.frameworks') }}</h3>
-        <div class="relative overflow-hidden py-4">
-          <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-bg-primary to-transparent z-10"></div>
-          <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-bg-primary to-transparent z-10"></div>
-          <div class="flex gap-6 animate-marquee whitespace-nowrap">
-            <template v-for="n in 2" :key="n">
-              <span
-                v-for="fw in frameworks"
-                :key="`${n}-${fw}`"
-                class="inline-flex px-6 py-3 border border-border text-sm font-mono text-text-secondary hover:text-text-primary transition-colors shrink-0"
-              >
-                {{ fw }}
-              </span>
-            </template>
-          </div>
-        </div>
-        <div class="relative overflow-hidden py-4 mt-2">
-          <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-bg-primary to-transparent z-10"></div>
-          <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-bg-primary to-transparent z-10"></div>
-          <div class="flex gap-6 animate-marquee-reverse whitespace-nowrap">
-            <template v-for="n in 2" :key="n">
-              <span
-                v-for="fw in [...frameworks].reverse()"
-                :key="`${n}-${fw}`"
-                class="inline-flex px-6 py-3 border border-border text-sm font-mono text-text-secondary hover:text-text-primary transition-colors shrink-0"
-              >
-                {{ fw }}
-              </span>
-            </template>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </template>
