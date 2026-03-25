@@ -264,6 +264,16 @@ body {
   opacity: 1;
 }
 
+/* Register note scale bounce */
+.register-note-bounce {
+  animation: scale-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scale-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 /* Theme icons - flattened emoji */
 .theme-icon {
   filter: saturate(0.85);
