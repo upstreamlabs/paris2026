@@ -42,27 +42,27 @@ const timeUnits = [
 
       <!-- Eyebrow -->
       <div class="inline-flex items-center gap-3 mb-10">
-        <div class="h-px w-12 bg-gray-300"></div>
-        <span class="text-xs text-gray-600 font-light tracking-[0.2em] uppercase">{{ t('hero.eyebrow') }}</span>
-        <div class="h-px w-12 bg-gray-300"></div>
+        <div class="h-px w-12 bg-border-hover"></div>
+        <span class="text-xs text-text-tertiary font-light tracking-[0.2em] uppercase">{{ t('hero.eyebrow') }}</span>
+        <div class="h-px w-12 bg-border-hover"></div>
       </div>
 
       <!-- Main title -->
       <div class="mb-6">
-        <div class="shimmer-text text-6xl md:text-8xl lg:text-[10rem]" style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; line-height: 0.9;">Upstream</div>
-        <div class="heading-serif text-2xl md:text-4xl lg:text-5xl text-gray-600 mt-4">Agentic Hackathon</div>
+        <div class="shimmer-text text-6xl md:text-8xl lg:text-[10rem] pb-4" style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; line-height: 1.1;">Upstream</div>
+        <div class="heading-serif text-2xl md:text-4xl lg:text-5xl text-text-tertiary mt-4">Agentic Hackathon</div>
       </div>
 
       <!-- Tagline -->
-      <p class="text-lg md:text-xl text-gray-500 font-light tracking-wide mt-4 mb-2 heading-serif" style="font-style: italic;">
+      <p class="text-lg md:text-xl text-text-tertiary font-light tracking-wide mt-4 mb-2 heading-serif" style="font-style: italic;">
         {{ t('hero.tagline') }}
       </p>
 
       <!-- Divider line -->
       <div class="flex items-center justify-center gap-6 my-10">
-        <div class="h-px flex-1 max-w-24 bg-gray-200"></div>
-        <span class="text-xs text-gray-600 tracking-[0.25em] uppercase">{{ t('hero.location') }}</span>
-        <div class="h-px flex-1 max-w-24 bg-gray-200"></div>
+        <div class="h-px flex-1 max-w-24 bg-border"></div>
+        <span class="text-xs text-text-tertiary tracking-[0.25em] uppercase">{{ t('hero.location') }}</span>
+        <div class="h-px flex-1 max-w-24 bg-border"></div>
       </div>
 
       <!-- LIVE indicator -->
@@ -79,24 +79,24 @@ const timeUnits = [
         <div
           v-for="unit in timeUnits"
           :key="unit.key"
-          class="flex flex-col items-center min-w-[64px] md:min-w-[80px] px-3 py-4 md:px-5 md:py-5 rounded-xl bg-white/60 backdrop-blur-md border border-white/40 shadow-sm countdown-card"
+          class="flex flex-col items-center min-w-[64px] md:min-w-[80px] px-3 py-4 md:px-5 md:py-5 bg-bg-card/60 backdrop-blur-md border border-bg-card/40 shadow-sm countdown-card"
         >
-          <span class="text-4xl md:text-6xl font-black font-mono text-gray-900 tabular-nums inline-block countdown-num" :key="unit.value.value">
+          <span class="text-4xl md:text-6xl font-black font-mono text-text-primary tabular-nums inline-block countdown-num" :key="unit.value.value">
             {{ String(unit.value.value).padStart(2, '0') }}
           </span>
-          <span class="text-[10px] text-gray-500 mt-1 uppercase tracking-[0.15em]">{{ t(unit.key) }}</span>
+          <span class="text-[10px] text-text-tertiary mt-1 uppercase tracking-[0.15em]">{{ t(unit.key) }}</span>
         </div>
       </div>
 
       <!-- Event ended -->
       <div v-else class="mb-12">
-        <span class="text-lg text-gray-500 uppercase tracking-widest font-semibold">Event Concluded</span>
+        <span class="text-lg text-text-tertiary uppercase tracking-widest font-semibold">Event Concluded</span>
       </div>
 
       <!-- CTA -->
       <a
         href="#teams"
-        class="inline-block px-10 py-4 text-white text-sm font-semibold tracking-widest uppercase transition-all duration-300 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5"
+        class="inline-block px-10 py-4 text-white text-sm font-semibold tracking-widest uppercase transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5"
         style="background: linear-gradient(135deg, #2c3e6b, #16A085);"
       >
         {{ t('nav.applyNow') }}
@@ -106,7 +106,7 @@ const timeUnits = [
 
     <!-- Scroll indicator -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
-      <div class="w-px h-12 bg-gradient-to-b from-gray-400 to-transparent mx-auto"></div>
+      <div class="w-px h-12 bg-gradient-to-b from-text-muted to-transparent mx-auto"></div>
     </div>
   </section>
 </template>

@@ -23,18 +23,17 @@ const faqs = computed(() => t('faq.items') as any[])
         </h2>
       </div>
 
-      <div class="space-y-3 reveal">
+      <div class="space-y-0 reveal">
         <div
           v-for="(faq, i) in faqs"
           :key="i"
-          class="glass-card overflow-hidden transition-all"
-          :class="openIndex === i ? 'border-accent/30' : ''"
+          class="border-b border-border-subtle overflow-hidden transition-all"
         >
           <button
             @click="toggle(i)"
             class="w-full flex items-center justify-between p-6 text-left"
           >
-            <span class="font-semibold text-gray-900 pr-4">{{ faq.q }}</span>
+            <span class="font-semibold text-text-primary pr-4">{{ faq.q }}</span>
             <svg
               class="w-5 h-5 text-text-secondary shrink-0 transition-transform duration-300"
               :class="openIndex === i ? 'rotate-180' : ''"

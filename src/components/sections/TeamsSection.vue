@@ -269,12 +269,12 @@ function teamVibe(count: number) {
   return { label: 'Three Musketeers', color: 'text-emerald-600' }
 }
 
-function repoName(url: string) {
-  const m = url.match(/github\.com\/([^/]+\/[^/]+)/)
-  return m ? m[1] : url.replace(/https?:\/\//, '')
-}
+// function repoName(url: string) {
+//   const m = url.match(/github\.com\/([^/]+\/[^/]+)/)
+//   return m ? m[1] : url.replace(/https?:\/\//, '')
+// }
 
-const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-accent/50 focus:outline-none transition-colors text-sm'
+const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border text-text-primary placeholder-input-placeholder focus:border-accent/50 focus:outline-none transition-colors text-sm'
 </script>
 
 <template>
@@ -304,7 +304,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
         <p class="text-amber-600 mt-2 text-sm font-semibold register-note-bounce">{{ t('teams.registerNote') }}</p>
         <div class="flex items-center justify-center gap-3 mt-3">
           <span class="text-xs text-text-secondary">Updated {{ timeAgo(lastUpdated) }}</span>
-          <button @click="fetchTeams" class="text-xs text-blue-600 hover:text-gray-900 transition-colors flex items-center gap-1">
+          <button @click="fetchTeams" class="text-xs text-blue-600 hover:text-text-primary transition-colors flex items-center gap-1">
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
             {{ t('teams.refresh') }}
           </button>
@@ -315,33 +315,33 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
       <div class="max-w-2xl mx-auto mb-12 reveal">
         <div class="flex justify-between text-sm mb-3">
           <span class="text-text-secondary">
-            <span class="text-gray-900 font-bold">{{ teams.length }}</span> {{ t('teams.teams') }} ·
-            <span class="text-gray-900 font-bold">{{ totalMembers }}</span> in teams ·
-            <span class="text-gray-900 font-bold">{{ totalRegistered }}</span> registered
+            <span class="text-text-primary font-bold">{{ teams.length }}</span> {{ t('teams.teams') }} ·
+            <span class="text-text-primary font-bold">{{ totalMembers }}</span> in teams ·
+            <span class="text-text-primary font-bold">{{ totalRegistered }}</span> registered
           </span>
           <span class="text-text-secondary">
             <span class="text-amber-600 font-bold">{{ spotsLeft }}</span> {{ t('teams.spotsLeft') }}
           </span>
         </div>
-        <div class="w-full h-2 bg-gray-50 rounded-full overflow-hidden">
-          <div class="h-full bg-gray-900 rounded-full transition-all duration-1000" :style="{ width: `${progress}%` }"></div>
+        <div class="w-full h-1 bg-bg-elevated overflow-hidden">
+          <div class="h-full bg-accent transition-all duration-1000" :style="{ width: `${progress}%` }"></div>
         </div>
         <div class="flex justify-center gap-6 mt-6">
           <div v-for="(count, model) in modelStats" :key="model" class="flex items-center gap-2">
-            <img v-if="getModelIcon(model as string)" :src="getModelIcon(model as string)" class="h-5 w-auto max-w-[60px] object-contain" :title="(model as string)" />
-            <span class="text-sm font-semibold text-gray-900">{{ count }}</span>
+            <img v-if="getModelIcon(model as string)" :src="getModelIcon(model as string)" class="h-5 w-auto max-w-[60px] object-contain rounded-[10px]" :title="(model as string)" />
+            <span class="text-sm font-semibold text-text-primary">{{ count }}</span>
           </div>
         </div>
       </div>
 
       <div class="text-center mb-12 reveal">
         <template v-if="isLoggedIn">
-          <button @click="openCreateModal" :disabled="isFull || userHasTeam()" class="px-8 py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <button @click="openCreateModal" :disabled="isFull || userHasTeam()" class="px-8 py-4 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             {{ isFull ? t('teams.closedBtn') : userHasTeam() ? 'Already in a team' : t('teams.registerBtn') }}
           </button>
         </template>
         <template v-else>
-          <button @click="promptAuth('register')" class="px-8 py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors">
+          <button @click="promptAuth('register')" class="px-8 py-4 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors">
             {{ t('nav.applyNow') }}
           </button>
         </template>
@@ -357,76 +357,71 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
       </div>
 
       <!-- Teams grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div
           v-for="team in filteredTeams"
           :key="team.id"
           @click="openViewModal(team)"
           @mouseenter="hoveredTeam = team.id"
           @mouseleave="hoveredTeam = null"
-          class="glass-card p-5 transition-all group relative cursor-pointer hover:border-accent-cyan/40 flex flex-col"
+          class="team-card glass-card-glow p-6 transition-all group relative cursor-pointer flex flex-col"
         >
-          <!-- Header: fixed -->
-          <div class="flex items-center gap-3 mb-2">
-            <img :src="team.avatar || '/default-avatar.svg'" class="w-10 h-10 rounded-full shrink-0 object-cover border border-gray-200" />
-            <div class="min-w-0">
-              <h3 class="font-bold text-gray-900 text-sm truncate group-hover:text-accent transition-colors">{{ team.name }}</h3>
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3 min-w-0">
+              <img :src="team.avatar || '/default-avatar.svg'" class="w-11 h-11 rounded-full shrink-0 object-cover border border-border" />
+              <div class="min-w-0">
+                <h3 class="font-bold text-text-primary text-base truncate group-hover:text-accent transition-colors">{{ team.name }}</h3>
+                <div class="flex items-center gap-2 mt-0.5">
+                  <template v-for="theme in (team.themes || []).slice(0, 3)" :key="theme">
+                    <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" :title="getTrackLabel(theme)" />
+                  </template>
+                  <img v-if="team.model && getModelIcon(team.model)" :src="getModelIcon(team.model)" :alt="team.model" class="w-3.5 h-3.5 rounded-[10px]" />
+                </div>
+              </div>
+            </div>
+            <span class="text-xs font-mono text-text-muted shrink-0">{{ getTeamMembers(team.id).length }}/{{ team.maxSize || 3 }}</span>
+          </div>
+
+          <!-- Member slots grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+            <div v-for="member in getTeamMembers(team.id)" :key="member.id" class="flex items-center gap-2 px-3 py-2 bg-bg-elevated/60 border border-border-subtle">
+              <img :src="member.avatar || '/default-avatar.svg'" class="w-6 h-6 rounded-full shrink-0 object-cover" />
+              <div class="min-w-0">
+                <span v-if="member.id === team.leaderId" class="text-[9px] text-amber-600 block leading-tight">Lead</span>
+                <span class="text-xs text-text-secondary truncate block">{{ member.name }}</span>
+              </div>
+            </div>
+            <!-- Empty slots -->
+            <div v-for="n in Math.max(0, (team.maxSize || 3) - getTeamMembers(team.id).length)" :key="'empty-' + n" class="flex items-center justify-center px-3 py-2 border border-dashed border-border-hover text-text-muted text-xs">
+              Open
             </div>
           </div>
-          <!-- Badges -->
-          <div class="flex flex-wrap items-center gap-1.5 mb-2">
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-gray-50 font-semibold" :class="teamVibe(getTeamMembers(team.id).length).color">{{ teamVibe(getTeamMembers(team.id).length).label }}</span>
-            <span v-if="team.locked" class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 inline-flex items-center gap-0.5">
-              <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
-              Solo
-            </span>
-            <span v-else-if="canJoin(team)" class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">+{{ (team.maxSize || 3) - getTeamMembers(team.id).length }} {{ t('teams.open') }}</span>
-            <template v-for="theme in (team.themes || [])" :key="theme">
-              <span v-if="getTrackIcon(theme)" class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600" :title="getTrackLabel(theme)">
-                <img :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
+
+          <!-- Bottom -->
+          <div class="mt-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <a v-if="team.githubRepo" :href="team.githubRepo" target="_blank" @click.stop class="inline-flex items-center gap-1 text-[11px] text-text-secondary hover:text-blue-600 transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                Repo
+              </a>
+              <span v-if="team.locked" class="text-[10px] text-text-muted inline-flex items-center gap-0.5">
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
+                Locked
               </span>
-            </template>
-          </div>
-
-          <!-- Members: grows to fill -->
-          <div class="flex-1 space-y-1.5 mb-2">
-            <div v-for="member in getTeamMembers(team.id)" :key="member.id" class="flex items-center gap-2">
-              <img :src="member.avatar || '/default-avatar.svg'" class="w-4 h-4 rounded-full shrink-0 object-cover" />
-              <span class="text-xs text-gray-700 truncate">{{ member.name }}</span>
-              <span v-if="member.id === team.leaderId" class="text-[9px] text-amber-600 shrink-0">Lead</span>
-              <a v-if="member.githubId" :href="'https://github.com/' + member.githubId.replace(/^@/, '')" target="_blank" @click.stop class="text-[10px] text-text-secondary hover:text-blue-600 transition-colors truncate">@{{ member.githubId.replace(/^@/, '') }}</a>
             </div>
-          </div>
-
-          <!-- Bottom: pinned -->
-          <div class="mt-auto">
-            <a v-if="team.githubRepo" :href="team.githubRepo" target="_blank" @click.stop class="inline-flex items-center gap-1 mb-2 text-[11px] text-text-secondary hover:text-blue-600 transition-colors">
-              <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              {{ repoName(team.githubRepo) }}
-            </a>
-
-            <div v-if="team.model" class="flex gap-1.5 mb-2">
-              <img v-if="getModelIcon(team.model)" :src="getModelIcon(team.model)" :alt="team.model" :title="team.model" class="w-4 h-4 rounded opacity-60 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            <!-- Like button + count -->
-            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
             <button
               @click="handleLike(team.id, $event)"
               class="inline-flex items-center gap-1 text-xs transition-colors"
-              :class="likedTeams.has(team.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-400'"
+              :class="likedTeams.has(team.id) ? 'text-red-500' : 'text-text-muted hover:text-red-400'"
             >
               <svg class="w-4 h-4" :fill="likedTeams.has(team.id) ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
-              <span>{{ team.likes || 0 }}</span>
+              {{ team.likes || 0 }}
             </button>
-            <span class="text-[10px] text-gray-300">{{ getTeamMembers(team.id).length }}/{{ team.maxSize || 3 }}</span>
           </div>
-          </div><!-- end mt-auto -->
 
-          <!-- Project idea (always visible) -->
-          <div v-if="team.projectIdea" class="mt-2 pt-2 border-t border-gray-100">
-            <p class="text-[11px] text-text-secondary leading-relaxed line-clamp-2 italic">"{{ team.projectIdea }}"</p>
-          </div>
+          <!-- Project idea -->
+          <p v-if="team.projectIdea" class="mt-3 pt-3 border-t border-border-subtle text-xs text-text-secondary leading-relaxed line-clamp-2 italic">"{{ team.projectIdea }}"</p>
         </div>
       </div>
 
@@ -442,25 +437,25 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
           <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="showModal = false"></div>
 
           <div class="relative w-full max-w-lg glass-card p-8 max-h-[90vh] overflow-y-auto border-accent-red/20">
-            <button @click="showModal = false" class="absolute top-4 right-4 text-text-secondary hover:text-gray-900">
+            <button @click="showModal = false" class="absolute top-4 right-4 text-text-secondary hover:text-text-primary">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
             <!-- CREATE MODE -->
             <template v-if="modalMode === 'create'">
-              <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ t('teams.createTitle') }}</h3>
+              <h3 class="text-2xl font-bold text-text-primary mb-6">{{ t('teams.createTitle') }}</h3>
 
               <!-- Not logged in -->
               <div v-if="!isLoggedIn" class="text-center py-8">
                 <p class="text-text-secondary mb-4">Register to create your team</p>
-                <button @click="showModal = false; promptAuth('register')" class="px-6 py-3 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors rounded-lg">
+                <button @click="showModal = false; promptAuth('register')" class="px-6 py-3 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors">
                   Register
                 </button>
               </div>
 
               <!-- Logged in: create form -->
               <template v-else>
-                <div v-if="error" class="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">{{ error }}</div>
+                <div v-if="error" class="mb-4 p-3 bg-badge-danger-bg border border-accent-red/30 text-red-600 text-sm">{{ error }}</div>
 
                 <form @submit.prevent="submitCreate" class="space-y-5">
                   <div>
@@ -471,16 +466,16 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   <div>
                     <label class="block text-sm text-text-secondary mb-2">{{ t('teams.teamAvatar') }}</label>
                     <div class="flex items-center gap-3">
-                      <div class="w-14 h-14 rounded-xl border-2 border-gray-200 overflow-hidden shrink-0 flex items-center justify-center bg-white">
+                      <div class="w-14 h-14 rounded-[10px] border-2 border-border overflow-hidden shrink-0 flex items-center justify-center bg-bg-card">
                         <img :src="teamAvatar || defaultAvatar()" class="max-w-[80%] max-h-[80%] object-contain" />
                       </div>
                       <div class="flex flex-wrap items-center gap-2">
-                        <button v-for="preset in avatarPresets" :key="preset.id" type="button" @click="teamAvatar = preset.src" class="w-10 h-10 rounded-lg border-2 overflow-hidden transition-all flex items-center justify-center bg-white p-1" :class="teamAvatar === preset.src ? 'border-accent-red scale-110' : 'border-gray-200 hover:border-gray-300'">
-                          <img :src="preset.src" class="max-w-full max-h-full object-contain rounded-lg" />
+                        <button v-for="preset in avatarPresets" :key="preset.id" type="button" @click="teamAvatar = preset.src" class="w-10 h-10 rounded-[10px] border-2 overflow-hidden transition-all flex items-center justify-center bg-bg-card p-1" :class="teamAvatar === preset.src ? 'border-accent-red scale-110' : 'border-border hover:border-border-hover'">
+                          <img :src="preset.src" class="max-w-full max-h-full object-contain rounded-[10px]" />
                         </button>
-                        <label class="w-10 h-10 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 flex items-center justify-center cursor-pointer transition-all overflow-hidden" :class="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar) ? 'border-accent-red' : ''">
+                        <label class="w-10 h-10 rounded-[10px] border-2 border-dashed border-border-hover hover:border-border-strong flex items-center justify-center cursor-pointer transition-all overflow-hidden" :class="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar) ? 'border-accent-red' : ''">
                           <img v-if="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar)" :src="teamAvatar" class="w-full h-full object-cover" />
-                          <span v-else class="text-gray-500 text-sm">+</span>
+                          <span v-else class="text-text-tertiary text-sm">+</span>
                           <input type="file" accept="image/*" class="hidden" @change="uploadTeamAvatar($event)" />
                         </label>
                       </div>
@@ -499,8 +494,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                         :key="track.id"
                         type="button"
                         @click="toggleTrack(track.id)"
-                        class="flex items-center gap-2 px-3 py-2.5 rounded-lg border text-left transition-all text-sm"
-                        :class="selectedTracks.includes(track.id) ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'"
+                        class="flex items-center gap-2 px-3 py-2.5 border text-left transition-all text-sm"
+                        :class="selectedTracks.includes(track.id) ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'"
                       >
                         <img :src="track.icon" class="w-4 h-4 shrink-0 theme-icon" />
                         <span class="truncate">{{ track.label }}</span>
@@ -511,8 +506,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   <div>
                     <label class="block text-sm text-text-secondary mb-2">{{ t('teams.aiModels') }}</label>
                     <div class="flex gap-3">
-                      <button v-for="model in modelOptions" :key="model.id" type="button" @click="selectModel(model.id)" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all" :class="selectedModel === model.id ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'">
-                        <img :src="model.icon" class="w-5 h-5 rounded" />
+                      <button v-for="model in modelOptions" :key="model.id" type="button" @click="selectModel(model.id)" class="flex-1 flex items-center justify-center gap-2 py-3 border transition-all" :class="selectedModel === model.id ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'">
+                        <img :src="model.icon" class="w-5 h-5 rounded-[10px]" />
                         <span class="text-sm font-semibold">{{ model.label }}</span>
                       </button>
                     </div>
@@ -527,11 +522,11 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   <label class="flex items-center gap-3 cursor-pointer">
                     <div class="relative">
                       <input type="checkbox" v-model="teamLocked" class="sr-only peer" />
-                      <div class="w-9 h-5 bg-gray-200 rounded-full peer-checked:bg-accent transition-colors"></div>
-                      <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+                      <div class="w-9 h-5 bg-border rounded-full peer-checked:bg-accent transition-colors"></div>
+                      <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-bg-card rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
                     </div>
                     <div>
-                      <span class="text-sm text-gray-900">{{ t('teams.lockTeam') }}</span>
+                      <span class="text-sm text-text-primary">{{ t('teams.lockTeam') }}</span>
                       <p class="text-xs text-text-secondary">{{ t('teams.lockTeamDesc') }}</p>
                     </div>
                   </label>
@@ -540,14 +535,14 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   <div>
                     <label class="block text-sm text-text-secondary mb-1">Max team size</label>
                     <div class="flex gap-3">
-                      <button v-for="n in 3" :key="n" type="button" @click="maxSize = n" class="flex-1 py-2.5 rounded-lg border font-semibold transition-all flex flex-col items-center gap-0.5" :class="maxSize === n ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'">
+                      <button v-for="n in 3" :key="n" type="button" @click="maxSize = n" class="flex-1 py-2.5 border font-semibold transition-all flex flex-col items-center gap-0.5" :class="maxSize === n ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'">
                         <span>{{ n }}</span>
                         <span class="text-[10px] font-normal opacity-70">{{ teamVibe(n).label }}</span>
                       </button>
                     </div>
                   </div>
 
-                  <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
+                  <button type="submit" :disabled="loading" class="w-full py-4 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50">
                     {{ loading ? t('teams.submitting') : t('teams.submitBtn') }}
                   </button>
                 </form>
@@ -556,8 +551,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
             <!-- EDIT MODE -->
             <template v-else-if="modalMode === 'edit' && viewingTeam">
-              <h3 class="text-2xl font-bold text-gray-900 mb-6">Edit Team</h3>
-              <div v-if="error" class="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">{{ error }}</div>
+              <h3 class="text-2xl font-bold text-text-primary mb-6">Edit Team</h3>
+              <div v-if="error" class="mb-4 p-3 bg-badge-danger-bg border border-accent-red/30 text-red-600 text-sm">{{ error }}</div>
 
               <form @submit.prevent="submitEdit" class="space-y-5">
                 <div>
@@ -568,16 +563,16 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 <div>
                   <label class="block text-sm text-text-secondary mb-2">{{ t('teams.teamAvatar') }}</label>
                   <div class="flex items-center gap-3">
-                    <div class="w-14 h-14 rounded-xl border-2 border-gray-200 overflow-hidden shrink-0 flex items-center justify-center bg-white">
+                    <div class="w-14 h-14 rounded-[10px] border-2 border-border overflow-hidden shrink-0 flex items-center justify-center bg-bg-card">
                       <img :src="teamAvatar || defaultAvatar()" class="max-w-[80%] max-h-[80%] object-contain" />
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
-                      <button v-for="preset in avatarPresets" :key="preset.id" type="button" @click="teamAvatar = preset.src" class="w-10 h-10 rounded-lg border-2 overflow-hidden transition-all flex items-center justify-center bg-white p-1" :class="teamAvatar === preset.src ? 'border-accent-red scale-110' : 'border-gray-200 hover:border-gray-300'">
-                        <img :src="preset.src" class="max-w-full max-h-full object-contain rounded-lg" />
+                      <button v-for="preset in avatarPresets" :key="preset.id" type="button" @click="teamAvatar = preset.src" class="w-10 h-10 rounded-[10px] border-2 overflow-hidden transition-all flex items-center justify-center bg-bg-card p-1" :class="teamAvatar === preset.src ? 'border-accent-red scale-110' : 'border-border hover:border-border-hover'">
+                        <img :src="preset.src" class="max-w-full max-h-full object-contain rounded-[10px]" />
                       </button>
-                      <label class="w-10 h-10 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 flex items-center justify-center cursor-pointer transition-all overflow-hidden" :class="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar) ? 'border-accent-red' : ''">
+                      <label class="w-10 h-10 rounded-[10px] border-2 border-dashed border-border-hover hover:border-border-strong flex items-center justify-center cursor-pointer transition-all overflow-hidden" :class="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar) ? 'border-accent-red' : ''">
                         <img v-if="teamAvatar && !avatarPresets.some(p => p.src === teamAvatar)" :src="teamAvatar" class="w-full h-full object-cover" />
-                        <span v-else class="text-gray-500 text-sm">+</span>
+                        <span v-else class="text-text-tertiary text-sm">+</span>
                         <input type="file" accept="image/*" class="hidden" @change="uploadTeamAvatar($event)" />
                       </label>
                     </div>
@@ -596,8 +591,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                       :key="track.id"
                       type="button"
                       @click="toggleTrack(track.id)"
-                      class="flex items-center gap-2 px-3 py-2.5 rounded-lg border text-left transition-all text-sm"
-                      :class="selectedTracks.includes(track.id) ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'"
+                      class="flex items-center gap-2 px-3 py-2.5 border text-left transition-all text-sm"
+                      :class="selectedTracks.includes(track.id) ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'"
                     >
                       <img :src="track.icon" class="w-4 h-4 shrink-0 theme-icon" />
                       <span class="truncate">{{ track.label }}</span>
@@ -608,8 +603,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 <div>
                   <label class="block text-sm text-text-secondary mb-2">{{ t('teams.aiModels') }}</label>
                   <div class="flex gap-3">
-                    <button v-for="model in modelOptions" :key="model.id" type="button" @click="selectModel(model.id)" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all" :class="selectedModel === model.id ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'">
-                      <img :src="model.icon" class="w-5 h-5 rounded" />
+                    <button v-for="model in modelOptions" :key="model.id" type="button" @click="selectModel(model.id)" class="flex-1 flex items-center justify-center gap-2 py-3 border transition-all" :class="selectedModel === model.id ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'">
+                      <img :src="model.icon" class="w-5 h-5 rounded-[10px]" />
                       <span class="text-sm font-semibold">{{ model.label }}</span>
                     </button>
                   </div>
@@ -624,11 +619,11 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 <label class="flex items-center gap-3 cursor-pointer">
                   <div class="relative">
                     <input type="checkbox" v-model="teamLocked" class="sr-only peer" />
-                    <div class="w-9 h-5 bg-gray-200 rounded-full peer-checked:bg-accent transition-colors"></div>
-                    <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+                    <div class="w-9 h-5 bg-border rounded-full peer-checked:bg-accent transition-colors"></div>
+                    <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-bg-card rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
                   </div>
                   <div>
-                    <span class="text-sm text-gray-900">{{ t('teams.lockTeam') }}</span>
+                    <span class="text-sm text-text-primary">{{ t('teams.lockTeam') }}</span>
                     <p class="text-xs text-text-secondary">{{ t('teams.lockTeamDesc') }}</p>
                   </div>
                 </label>
@@ -637,14 +632,14 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 <div>
                   <label class="block text-sm text-text-secondary mb-1">Max team size</label>
                   <div class="flex gap-3">
-                    <button v-for="n in 3" :key="n" type="button" @click="maxSize = n" class="flex-1 py-2.5 rounded-lg border font-semibold transition-all flex flex-col items-center gap-0.5" :class="maxSize === n ? 'bg-accent/10 border-accent/50 text-gray-900' : 'border-gray-200 text-text-secondary hover:border-gray-300'">
+                    <button v-for="n in 3" :key="n" type="button" @click="maxSize = n" class="flex-1 py-2.5 border font-semibold transition-all flex flex-col items-center gap-0.5" :class="maxSize === n ? 'bg-accent/10 border-accent/50 text-text-primary' : 'border-border text-text-secondary hover:border-border-hover'">
                       <span>{{ n }}</span>
                       <span class="text-[10px] font-normal opacity-70">{{ teamVibe(n).label }}</span>
                     </button>
                   </div>
                 </div>
 
-                <button type="submit" :disabled="loading" class="w-full py-4 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors disabled:opacity-50">
+                <button type="submit" :disabled="loading" class="w-full py-4 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50">
                   {{ loading ? 'Saving...' : 'Save Changes' }}
                 </button>
               </form>
@@ -653,12 +648,12 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
             <!-- VIEW MODE -->
             <template v-else-if="modalMode === 'view' && viewingTeam">
               <div class="flex items-center gap-4 mb-6">
-                <img :src="viewingTeam.avatar || '/default-avatar.svg'" class="w-16 h-16 rounded-xl object-cover border border-gray-200" />
+                <img :src="viewingTeam.avatar || '/default-avatar.svg'" class="w-16 h-16 rounded-[10px] object-cover border border-border" />
                 <div>
-                  <h3 class="text-2xl font-bold text-gray-900">{{ viewingTeam.name }}</h3>
+                  <h3 class="text-2xl font-bold text-text-primary">{{ viewingTeam.name }}</h3>
                   <div class="flex items-center gap-2 mt-1">
                     <span class="text-sm text-text-secondary">{{ getTeamMembers(viewingTeam.id).length }}/{{ viewingTeam.maxSize || 3 }} members</span>
-                    <span v-if="viewingTeam.locked" class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 inline-flex items-center gap-0.5">
+                    <span v-if="viewingTeam.locked" class="text-[10px] px-1.5 py-0.5 rounded bg-badge-neutral-bg text-text-tertiary inline-flex items-center gap-0.5">
                       <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
                       Locked
                     </span>
@@ -668,7 +663,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
               <!-- Tracks -->
               <div v-if="viewingTeam.themes?.length" class="flex flex-wrap gap-2 mb-4">
-                <span v-for="theme in viewingTeam.themes" :key="theme" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-xs text-gray-600">
+                <span v-for="theme in viewingTeam.themes" :key="theme" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-badge-neutral-bg text-xs text-text-tertiary">
                   <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
                   {{ getTrackLabel(theme) }}
                 </span>
@@ -676,26 +671,26 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
 
               <!-- Model -->
               <div v-if="viewingTeam.model" class="flex gap-2 mb-4">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-xs text-gray-600">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-badge-neutral-bg text-xs text-text-tertiary">
                   <img v-if="getModelIcon(viewingTeam.model)" :src="getModelIcon(viewingTeam.model)" class="w-4 h-4 rounded" />
                   {{ viewingTeam.model }}
                 </div>
               </div>
 
               <!-- Project Idea -->
-              <div v-if="viewingTeam.projectIdea" class="mb-6 p-4 bg-gray-50 rounded-lg">
-                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-semibold">{{ t('teams.projectIdeaLabel') }}</p>
+              <div v-if="viewingTeam.projectIdea" class="mb-6 p-4 bg-bg-elevated">
+                <p class="text-xs text-text-muted uppercase tracking-wider mb-2 font-semibold">{{ t('teams.projectIdeaLabel') }}</p>
                 <p class="text-sm text-text-secondary leading-relaxed">"{{ viewingTeam.projectIdea }}"</p>
               </div>
 
               <!-- Members -->
               <div class="mb-6">
-                <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 font-semibold">{{ t('teams.membersLabel') }}</p>
+                <p class="text-xs text-text-muted uppercase tracking-wider mb-3 font-semibold">{{ t('teams.membersLabel') }}</p>
                 <div class="space-y-3">
-                  <div v-for="member in getTeamMembers(viewingTeam.id)" :key="member.id" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <img :src="member.avatar || '/default-avatar.svg'" class="w-8 h-8 rounded-full shrink-0 object-cover border border-gray-200" />
+                  <div v-for="member in getTeamMembers(viewingTeam.id)" :key="member.id" class="flex items-center gap-3 p-3 bg-bg-elevated">
+                    <img :src="member.avatar || '/default-avatar.svg'" class="w-8 h-8 rounded-full shrink-0 object-cover border border-border" />
                     <div class="flex-1 min-w-0">
-                      <span class="text-sm font-semibold text-gray-900">{{ member.name }}</span>
+                      <span class="text-sm font-semibold text-text-primary">{{ member.name }}</span>
                       <span v-if="member.id === viewingTeam.leaderId" class="text-[10px] text-amber-600 ml-1">{{ t('teams.lead') }}</span>
                       <span v-if="member.role" class="text-xs text-text-secondary ml-2">{{ member.role }}</span>
                     </div>
@@ -714,8 +709,8 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
               <div class="flex gap-3">
                 <button
                   @click="handleLike(viewingTeam.id, $event)"
-                  class="flex-1 py-3 rounded-lg border transition-all flex items-center justify-center gap-2 text-sm"
-                  :class="likedTeams.has(viewingTeam.id) ? 'border-red-200 bg-red-50 text-red-500' : 'border-gray-200 text-text-secondary hover:border-gray-300'"
+                  class="flex-1 py-3 border transition-all flex items-center justify-center gap-2 text-sm"
+                  :class="likedTeams.has(viewingTeam.id) ? 'border-accent-red/30 bg-badge-danger-bg text-red-500' : 'border-border text-text-secondary hover:border-border-hover'"
                 >
                   <svg class="w-4 h-4" :fill="likedTeams.has(viewingTeam.id) ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
                   {{ viewingTeam.likes || 0 }}
@@ -726,18 +721,18 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                   v-if="isLoggedIn && canJoin(viewingTeam) && !userHasTeam()"
                   @click="handleJoinTeam(viewingTeam.id)"
                   :disabled="loading"
-                  class="flex-[2] py-3 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors rounded-lg disabled:opacity-50"
+                  class="flex-[2] py-3 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50"
                 >
                   {{ loading ? 'Joining...' : t('teams.joinBtn') }}
                 </button>
 
                 <!-- Not logged in: register to join -->
-                <button v-else-if="!isLoggedIn && canJoin(viewingTeam)" @click="showModal = false; promptAuth('register')" class="flex-[2] py-3 bg-accent text-white text-sm font-semibold tracking-widest uppercase hover:bg-accent-hover transition-colors rounded-lg">
+                <button v-else-if="!isLoggedIn && canJoin(viewingTeam)" @click="showModal = false; promptAuth('register')" class="flex-[2] py-3 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors">
                   Register to Join
                 </button>
 
                 <!-- Locked -->
-                <span v-else-if="viewingTeam.locked" class="flex-[2] py-3 text-center text-sm text-gray-400 border border-gray-200 rounded-lg">
+                <span v-else-if="viewingTeam.locked" class="flex-[2] py-3 text-center text-sm text-text-muted border border-border">
                   {{ t('teams.notAccepting') }}
                 </span>
               </div>
@@ -747,7 +742,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
                 <button
                   @click="handleLeaveTeam"
                   :disabled="loading"
-                  class="w-full py-3 rounded-lg border border-red-200 text-red-500 text-sm font-semibold hover:bg-red-50 transition-colors disabled:opacity-50"
+                  class="w-full py-3 border border-accent-red/30 text-red-500 text-sm font-semibold hover:bg-badge-danger-bg transition-colors disabled:opacity-50"
                 >
                   {{ loading ? 'Leaving...' : 'Leave Team' }}
                 </button>
@@ -757,14 +752,14 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
               <div v-if="isLoggedIn && isTeamLeader(viewingTeam)" class="mt-3 flex gap-3">
                 <button
                   @click="openEditModal"
-                  class="flex-1 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition-colors"
+                  class="flex-1 py-3 border border-border text-text-secondary text-sm font-semibold hover:bg-bg-elevated transition-colors"
                 >
                   Edit Team
                 </button>
                 <button
                   @click="handleDeleteTeam"
                   :disabled="loading"
-                  class="flex-1 py-3 rounded-lg border border-red-200 text-red-500 text-sm font-semibold hover:bg-red-50 transition-colors disabled:opacity-50"
+                  class="flex-1 py-3 border border-accent-red/30 text-red-500 text-sm font-semibold hover:bg-badge-danger-bg transition-colors disabled:opacity-50"
                 >
                   {{ loading ? 'Deleting...' : 'Delete Team' }}
                 </button>

@@ -67,7 +67,7 @@ function openUserModal(user: User) {
         <!-- Stats -->
         <div class="flex items-center justify-center gap-6 mt-4">
           <span class="text-sm text-text-secondary">
-            <span class="text-gray-900 font-bold">{{ totalRegistered }}</span> registered
+            <span class="text-text-primary font-bold">{{ totalRegistered }}</span> registered
           </span>
           <span class="text-sm text-text-secondary">
             <span class="text-emerald-600 font-bold">{{ lookingForTeamCount }}</span> looking for team
@@ -85,9 +85,9 @@ function openUserModal(user: User) {
         >
           <!-- Avatar + name + role -->
           <div class="flex items-center gap-3 mb-2">
-            <img :src="user.avatar || '/default-avatar.svg'" class="w-10 h-10 rounded-full shrink-0 object-cover border border-gray-200" />
+            <img :src="user.avatar || '/default-avatar.svg'" class="w-10 h-10 rounded-full shrink-0 object-cover border border-border" />
             <div class="min-w-0">
-              <h3 class="font-bold text-gray-900 text-sm truncate group-hover:text-accent transition-colors">{{ user.name }}</h3>
+              <h3 class="font-bold text-text-primary text-sm truncate group-hover:text-accent transition-colors">{{ user.name }}</h3>
               <p v-if="user.role" class="text-[11px] text-text-secondary truncate">{{ user.role }}</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ function openUserModal(user: User) {
             <span
               v-for="theme in user.themes"
               :key="theme"
-              class="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600"
+              class="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-badge-neutral-bg text-text-tertiary"
               :title="getTrackLabel(theme)"
             >
               <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
@@ -121,14 +121,14 @@ function openUserModal(user: User) {
 
           <!-- Model icon -->
           <div v-if="user.preferredModel" class="flex items-center gap-1 mb-2">
-            <img v-if="getModelIcon(user.preferredModel)" :src="getModelIcon(user.preferredModel)" :alt="user.preferredModel" :title="user.preferredModel" class="w-4 h-4 rounded opacity-60 group-hover:opacity-100 transition-opacity" />
+            <img v-if="getModelIcon(user.preferredModel)" :src="getModelIcon(user.preferredModel)" :alt="user.preferredModel" :title="user.preferredModel" class="w-4 h-4 rounded-[10px] opacity-60 group-hover:opacity-100 transition-opacity" />
             <span class="text-[10px] text-text-secondary">{{ user.preferredModel }}</span>
           </div>
 
           <!-- Bottom tags -->
           <div class="mt-auto flex flex-wrap items-center gap-1.5">
-            <span v-if="user.lookingForTeam" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-semibold">Looking for Team</span>
-            <span v-if="getUserTeam(user)" class="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 truncate max-w-[120px]">{{ getUserTeam(user)!.name }}</span>
+            <span v-if="user.lookingForTeam" class="text-[10px] px-2 py-0.5 rounded-full bg-badge-success-bg text-badge-success-text font-semibold">Looking for Team</span>
+            <span v-if="getUserTeam(user)" class="text-[10px] px-2 py-0.5 rounded-full bg-badge-info-bg text-badge-info-text truncate max-w-[120px]">{{ getUserTeam(user)!.name }}</span>
           </div>
         </div>
       </div>
@@ -145,18 +145,18 @@ function openUserModal(user: User) {
           <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="showUserModal = false"></div>
 
           <div class="relative w-full max-w-lg glass-card p-8 max-h-[90vh] overflow-y-auto border-accent-red/20">
-            <button @click="showUserModal = false" class="absolute top-4 right-4 text-text-secondary hover:text-gray-900">
+            <button @click="showUserModal = false" class="absolute top-4 right-4 text-text-secondary hover:text-text-primary">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
             <!-- Profile header -->
             <div class="flex items-center gap-4 mb-6">
-              <img :src="viewingUser.avatar || '/default-avatar.svg'" class="w-16 h-16 rounded-full object-cover border border-gray-200" />
+              <img :src="viewingUser.avatar || '/default-avatar.svg'" class="w-16 h-16 rounded-full object-cover border border-border" />
               <div>
-                <h3 class="text-2xl font-bold text-gray-900">{{ viewingUser.name }}</h3>
+                <h3 class="text-2xl font-bold text-text-primary">{{ viewingUser.name }}</h3>
                 <p v-if="viewingUser.role" class="text-sm text-text-secondary">{{ viewingUser.role }}</p>
                 <div class="flex items-center gap-2 mt-1">
-                  <span v-if="viewingUser.lookingForTeam" class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-semibold">Looking for Team</span>
+                  <span v-if="viewingUser.lookingForTeam" class="text-[11px] px-2 py-0.5 rounded-full bg-badge-success-bg text-badge-success-text font-semibold">Looking for Team</span>
                 </div>
               </div>
             </div>
@@ -173,16 +173,16 @@ function openUserModal(user: User) {
             </a>
 
             <!-- Bio -->
-            <div v-if="viewingUser.bio" class="mb-6 p-4 bg-gray-50 rounded-lg">
-              <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-semibold">Bio</p>
+            <div v-if="viewingUser.bio" class="mb-6 p-4 bg-bg-elevated">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2 font-semibold">Bio</p>
               <p class="text-sm text-text-secondary leading-relaxed">{{ viewingUser.bio }}</p>
             </div>
 
             <!-- Themes -->
             <div v-if="viewingUser.themes?.length" class="mb-4">
-              <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 font-semibold">Interested Themes</p>
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-3 font-semibold">Interested Themes</p>
               <div class="flex flex-wrap gap-2">
-                <span v-for="theme in viewingUser.themes" :key="theme" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-xs text-gray-600">
+                <span v-for="theme in viewingUser.themes" :key="theme" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-badge-neutral-bg text-xs text-text-tertiary">
                   <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" />
                   {{ getTrackLabel(theme) }}
                 </span>
@@ -191,19 +191,19 @@ function openUserModal(user: User) {
 
             <!-- Preferred Model -->
             <div v-if="viewingUser.preferredModel" class="mb-6">
-              <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 font-semibold">Preferred Model</p>
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-xs text-gray-600">
-                <img v-if="getModelIcon(viewingUser.preferredModel)" :src="getModelIcon(viewingUser.preferredModel)" class="w-4 h-4 rounded" />
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-3 font-semibold">Preferred Model</p>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-badge-neutral-bg text-xs text-text-tertiary">
+                <img v-if="getModelIcon(viewingUser.preferredModel)" :src="getModelIcon(viewingUser.preferredModel)" class="w-4 h-4 rounded-[10px]" />
                 {{ viewingUser.preferredModel }}
               </div>
             </div>
 
             <!-- Team link -->
-            <div v-if="getUserTeam(viewingUser)" class="p-4 bg-gray-50 rounded-lg">
-              <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-semibold">Team</p>
+            <div v-if="getUserTeam(viewingUser)" class="p-4 bg-bg-elevated">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2 font-semibold">Team</p>
               <div class="flex items-center gap-3">
-                <img :src="getUserTeam(viewingUser)!.avatar || '/default-avatar.svg'" class="w-8 h-8 rounded-full object-cover border border-gray-200" />
-                <span class="text-sm font-semibold text-gray-900">{{ getUserTeam(viewingUser)!.name }}</span>
+                <img :src="getUserTeam(viewingUser)!.avatar || '/default-avatar.svg'" class="w-8 h-8 rounded-full object-cover border border-border" />
+                <span class="text-sm font-semibold text-text-primary">{{ getUserTeam(viewingUser)!.name }}</span>
               </div>
             </div>
           </div>

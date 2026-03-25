@@ -20,20 +20,20 @@ const frameworks = [
 
       <div class="max-w-3xl mx-auto text-center mb-16 reveal reveal-delay-1">
         <p class="text-text-secondary leading-relaxed">
-          {{ t('tech.desc_prefix') }}<span class="text-gray-900 font-semibold">{{ t('tech.desc_bold') }}</span>{{ t('tech.desc_suffix') }}
+          {{ t('tech.desc_prefix') }}<span class="text-text-primary font-semibold">{{ t('tech.desc_bold') }}</span>{{ t('tech.desc_suffix') }}
         </p>
       </div>
 
       <!-- Sponsors -->
       <h3 class="text-center text-sm text-text-secondary uppercase tracking-wider mb-6 reveal reveal-delay-2">{{ t('sponsors.title') }}</h3>
       <div class="grid md:grid-cols-3 gap-8 mb-16 max-w-3xl mx-auto reveal reveal-delay-2">
-        <a href="https://z.ai/" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+        <a href="https://z.ai/" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
           <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI" class="h-14 w-auto max-w-[240px] object-contain" />
         </a>
-        <a href="https://www.minimaxi.com" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+        <a href="https://www.minimaxi.com" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
           <img src="/sponsors/minimax-logo.webp" alt="MiniMax" class="h-8 w-auto max-w-[180px] object-contain" />
         </a>
-        <a href="https://www.kimi.com" target="_blank" class="glass-card glass-card-glow glow-border p-8 flex items-center justify-center transition-all group block h-28">
+        <a href="https://www.kimi.com" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
           <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI" class="h-8 w-auto max-w-[180px] object-contain" />
         </a>
       </div>
@@ -49,7 +49,7 @@ const frameworks = [
               <span
                 v-for="fw in frameworks"
                 :key="`${n}-${fw}`"
-                class="inline-flex px-6 py-3 glass-card text-sm font-mono text-text-secondary hover:text-gray-900 transition-colors shrink-0"
+                class="inline-flex px-6 py-3 border border-border text-sm font-mono text-text-secondary hover:text-text-primary transition-colors shrink-0"
               >
                 {{ fw }}
               </span>
@@ -64,7 +64,7 @@ const frameworks = [
               <span
                 v-for="fw in [...frameworks].reverse()"
                 :key="`${n}-${fw}`"
-                class="inline-flex px-6 py-3 glass-card text-sm font-mono text-text-secondary hover:text-gray-900 transition-colors shrink-0"
+                class="inline-flex px-6 py-3 border border-border text-sm font-mono text-text-secondary hover:text-text-primary transition-colors shrink-0"
               >
                 {{ fw }}
               </span>

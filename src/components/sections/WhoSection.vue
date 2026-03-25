@@ -15,7 +15,7 @@ const participants = computed(() => t('who.participants') as any[])
           {{ t('who.title') }} <span class="heading-serif accent-text">{{ t('who.titleAccent') }}</span>
         </h2>
         <p class="text-text-secondary mt-4 text-lg max-w-2xl mx-auto">
-          {{ t('who.desc_prefix') }}<span class="text-gray-900 font-semibold">{{ t('who.desc_bold') }}</span>{{ t('who.desc_suffix') }}
+          {{ t('who.desc_prefix') }}<span class="text-text-primary font-semibold">{{ t('who.desc_bold') }}</span>{{ t('who.desc_suffix') }}
         </p>
       </div>
 
@@ -23,9 +23,9 @@ const participants = computed(() => t('who.participants') as any[])
         <div
           v-for="p in participants"
           :key="p.title"
-          class="glass-card glass-card-glow p-6 text-center hover:scale-105 transition-all group"
+          class="p-6 text-center border-b border-border-subtle md:border-b-0 md:border-r md:last:border-r-0 transition-all group"
         >
-          <h3 class="font-bold text-gray-900 group-hover:text-accent transition-colors">{{ p.title }}</h3>
+          <h3 class="font-bold text-text-primary group-hover:text-accent transition-colors">{{ p.title }}</h3>
           <p class="text-text-secondary text-sm mt-1">{{ p.desc }}</p>
         </div>
       </div>

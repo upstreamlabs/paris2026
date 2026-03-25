@@ -20,7 +20,7 @@ const { t } = useI18n()
       </p>
       <a
         href="#teams"
-        class="inline-block px-10 py-4 text-white text-sm font-semibold tracking-widest uppercase transition-all duration-300 rounded-lg hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5"
+        class="inline-block px-10 py-4 text-white text-sm font-semibold tracking-widest uppercase transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-0.5"
         style="background: linear-gradient(135deg, #2c3e6b, #16A085);"
       >
         {{ t('nav.applyNow') }}

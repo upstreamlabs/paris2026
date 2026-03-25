@@ -33,6 +33,16 @@ const expandedTheme = ref<string | null>('01')
 function toggleTheme(number: string) {
   expandedTheme.value = expandedTheme.value === number ? null : number
 }
+
+const themeColors: Record<string, string> = {
+  '01': '#4CAF50',
+  '02': '#E8D44D',
+  '03': '#3BA7D0',
+  '04': '#ef4444',
+  '05': '#a855f7',
+  '06': '#f59e0b',
+  '07': '#3b82f6',
+}
 </script>
 
 <template>
@@ -53,31 +63,36 @@ function toggleTheme(number: string) {
         </p>
       </div>
 
-      <!-- Theme cards -->
-      <div class="space-y-6">
+      <!-- Theme list -->
+      <div class="max-w-4xl mx-auto">
         <div
           v-for="(theme, i) in themes"
           :key="theme.number"
-          class="glass-card glass-card-glow overflow-hidden reveal cursor-pointer"
+          class="relative pl-8 py-8 cursor-pointer glass-card-glow reveal border-l-2 border-transparent group hover:bg-bg-card/20 transition-colors"
           :class="`reveal-delay-${(i % 4) + 1}`"
+          :style="{ borderImage: `linear-gradient(to bottom, ${themeColors[theme.number]}, transparent) 1` }"
           @click="toggleTheme(theme.number)"
         >
+          <!-- Watermark number -->
+          <span class="absolute -top-2 -left-3 text-7xl font-black gradient-number opacity-10 select-none" style="line-height:1;">{{ theme.number }}</span>
+
           <!-- Header -->
-          <div class="p-8 flex items-start gap-6">
-            <div class="shrink-0 flex flex-col items-center gap-2">
-              <img v-if="themeIconSrc[theme.number]" :src="themeIconSrc[theme.number]" class="w-8 h-8 theme-icon" />
-              <span class="text-3xl font-black gradient-number">{{ theme.number }}</span>
-            </div>
+          <div class="relative flex items-start gap-4">
+            <img v-if="themeIconSrc[theme.number]" :src="themeIconSrc[theme.number]" class="w-7 h-7 theme-icon shrink-0 mt-0.5" />
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-3 mb-1">
-                <h3 class="text-xl font-bold text-gray-900">{{ theme.title }}</h3>
-                <span class="text-sm text-gray-400">{{ theme.subtitle }}</span>
+                <h3 class="heading-serif text-xl text-text-primary">{{ theme.title }}</h3>
+                <span class="text-sm text-text-muted">{{ theme.subtitle }}</span>
               </div>
               <p class="text-text-secondary text-sm leading-relaxed">{{ theme.description }}</p>
+              <span v-if="expandedTheme !== theme.number" class="inline-flex items-center gap-1 text-xs text-text-muted mt-2 group-hover:text-text-secondary transition-colors">
+                Click to explore
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </span>
             </div>
             <svg
-              class="w-5 h-5 text-gray-400 shrink-0 mt-1 transition-transform duration-300"
-              :class="{ 'rotate-180': expandedTheme === theme.number }"
+              class="w-5 h-5 shrink-0 mt-1 transition-all duration-300"
+              :class="expandedTheme === theme.number ? 'rotate-180 text-text-secondary' : 'text-text-muted group-hover:text-text-secondary'"
               fill="none" viewBox="0 0 24 24" stroke="currentColor"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -86,29 +101,27 @@ function toggleTheme(number: string) {
 
           <!-- Expanded content -->
           <Transition name="expand">
-            <div v-if="expandedTheme === theme.number" class="px-8 pb-8">
-              <div class="border-t border-gray-200/60 pt-6">
-                <p class="text-text-secondary text-sm leading-relaxed mb-6">{{ theme.detail }}</p>
-                <div>
-                  <h4 class="text-xs text-gray-400 uppercase tracking-wider mb-3 font-semibold">Possible Directions</h4>
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      v-for="dir in theme.directions"
-                      :key="dir"
-                      class="px-3 py-1.5 text-xs rounded-full border border-gray-200 text-text-secondary bg-white/50"
-                    >
-                      {{ dir }}
-                    </span>
-                  </div>
+            <div v-if="expandedTheme === theme.number" class="relative mt-6 pl-11">
+              <p class="text-text-secondary text-sm leading-relaxed mb-6">{{ theme.detail }}</p>
+              <div>
+                <h4 class="text-xs text-text-muted uppercase tracking-wider mb-3 font-semibold">Possible Directions</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    v-for="dir in theme.directions"
+                    :key="dir"
+                    class="px-3 py-1.5 text-xs border border-border text-text-secondary"
+                  >
+                    {{ dir }}
+                  </span>
                 </div>
-                <button
-                  @click.stop="setTeamFilter(themeIds[theme.number] || theme.title)"
-                  class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-sm text-text-secondary hover:text-gray-900 hover:border-gray-400 transition-all"
-                >
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" /></svg>
-                  View Teams
-                </button>
               </div>
+              <button
+                @click.stop="setTeamFilter(themeIds[theme.number] || theme.title)"
+                class="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-border text-sm text-text-secondary hover:text-text-primary hover:border-border-strong transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" /></svg>
+                View Teams
+              </button>
             </div>
           </Transition>
         </div>

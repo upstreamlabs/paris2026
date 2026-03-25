@@ -27,8 +27,8 @@ const schedule = computed(() => t('schedule.items') as any)
           @click="activeDay = day"
           class="px-8 py-3 text-sm font-semibold tracking-wider uppercase transition-all border"
           :class="activeDay === day
-            ? 'bg-accent border-accent text-white'
-            : 'border-gray-200 bg-transparent text-text-secondary hover:text-gray-900 hover:border-gray-300'"
+            ? 'bg-btn-bg border-btn-bg text-btn-text'
+            : 'border-border bg-transparent text-text-secondary hover:text-text-primary hover:border-border-hover'"
         >
           {{ day === 1 ? t('schedule.day1') : t('schedule.day2') }}
         </button>
@@ -37,7 +37,7 @@ const schedule = computed(() => t('schedule.items') as any)
       <!-- Timeline -->
       <div class="relative">
         <!-- Vertical line -->
-        <div class="absolute left-[7px] md:left-[140px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-gray-300 via-gray-400 to-gray-500"></div>
+        <div class="absolute left-[7px] md:left-[140px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-border-hover via-border-strong to-text-muted"></div>
 
         <div
           v-for="(item, i) in schedule[activeDay]"
@@ -45,7 +45,7 @@ const schedule = computed(() => t('schedule.items') as any)
           class="relative flex gap-6 md:gap-8 mb-8 group"
         >
           <!-- Dot -->
-          <div class="absolute left-0 md:left-[133px] w-4 h-4 rounded-full bg-white border-2 border-gray-400 group-hover:bg-gray-900 group-hover:scale-125 transition-all mt-1"></div>
+          <div class="absolute left-0 md:left-[133px] w-4 h-4 rounded-full bg-bg-card border-2 border-border-strong group-hover:bg-accent group-hover:scale-125 transition-all mt-1"></div>
 
           <!-- Time -->
           <div class="hidden md:block w-[120px] text-right shrink-0">
@@ -53,9 +53,9 @@ const schedule = computed(() => t('schedule.items') as any)
           </div>
 
           <!-- Content -->
-          <div class="ml-8 md:ml-6 glass-card p-6 flex-1 group-hover:-translate-y-1 transition-transform">
+          <div class="ml-8 md:ml-6 py-2 flex-1 group-hover:-translate-y-0.5 transition-transform">
             <span class="md:hidden text-xs font-mono text-amber-600">{{ item.time }}</span>
-            <h3 class="font-bold text-gray-900 text-lg">{{ item.title }}</h3>
+            <h3 class="heading-serif text-text-primary text-lg">{{ item.title }}</h3>
             <p v-if="item.desc" class="text-text-secondary text-sm mt-1">{{ item.desc }}</p>
           </div>
         </div>

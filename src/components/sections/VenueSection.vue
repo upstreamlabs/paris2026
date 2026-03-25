@@ -17,24 +17,24 @@ const { t } = useI18n()
         <div class="reveal">
           <span class="text-xs text-text-secondary uppercase tracking-[0.2em]">{{ t('venue.label') }}</span>
           <h2 class="text-4xl md:text-5xl font-black mt-4 mb-6">
-            {{ t('venue.title') }}<br /><span class="heading-serif font-medium text-gray-600">{{ t('venue.subtitle') }}</span>
+            {{ t('venue.title') }}<br /><span class="heading-serif font-medium text-text-tertiary">{{ t('venue.subtitle') }}</span>
           </h2>
           <p class="text-text-secondary leading-relaxed mb-6">
             {{ t('venue.desc') }}
           </p>
           <div class="flex gap-8">
             <div>
-              <div class="text-2xl font-black text-gray-900">1000+</div>
+              <div class="text-2xl font-black text-text-primary">1000+</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">{{ t('venue.startups') }}</div>
             </div>
-            <div class="w-px bg-gray-200"></div>
+            <div class="w-px bg-border"></div>
             <div>
-              <div class="text-2xl font-black text-gray-900">34 000</div>
+              <div class="text-2xl font-black text-text-primary">34 000</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">{{ t('venue.campus') }}</div>
             </div>
-            <div class="w-px bg-gray-200"></div>
+            <div class="w-px bg-border"></div>
             <div>
-              <div class="text-2xl font-black text-gray-900">13th</div>
+              <div class="text-2xl font-black text-text-primary">13th</div>
               <div class="text-xs text-text-secondary uppercase tracking-widest mt-1">{{ t('venue.district') }}</div>
             </div>
           </div>
