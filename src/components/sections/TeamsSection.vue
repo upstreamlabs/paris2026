@@ -423,19 +423,10 @@ const inputClass = 'w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-
           </div>
           </div><!-- end mt-auto -->
 
-          <!-- Hover expanded details -->
-          <Transition
-            enter-active-class="transition-all duration-200"
-            enter-from-class="opacity-0 max-h-0"
-            enter-to-class="opacity-100 max-h-40"
-            leave-active-class="transition-all duration-150"
-            leave-from-class="opacity-100 max-h-40"
-            leave-to-class="opacity-0 max-h-0"
-          >
-            <div v-if="hoveredTeam === team.id && team.projectIdea" class="overflow-hidden mt-2 pt-2 border-t border-gray-100">
-              <p class="text-[11px] text-text-secondary leading-relaxed">"{{ team.projectIdea }}"</p>
-            </div>
-          </Transition>
+          <!-- Project idea (always visible) -->
+          <div v-if="team.projectIdea" class="mt-2 pt-2 border-t border-gray-100">
+            <p class="text-[11px] text-text-secondary leading-relaxed line-clamp-2 italic">"{{ team.projectIdea }}"</p>
+          </div>
         </div>
       </div>
 
