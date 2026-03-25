@@ -4,7 +4,7 @@ import { useI18n } from '../../composables/useI18n'
 const { t } = useI18n()
 
 const frameworks = [
-  'MCP', 'A2A', 'ACP', 'OpenClaw', 'LangGraph', 'CrewAI',
+  'MoFA.ai', 'MCP', 'A2A', 'ACP', 'OpenClaw', 'LangGraph', 'CrewAI',
   'AutoGen', 'dora-rs', 'vLLM', 'SGLang', 'CopilotKit', 'Nexent',
 ]
 </script>

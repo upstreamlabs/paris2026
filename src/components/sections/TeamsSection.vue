@@ -302,6 +302,7 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
         </h2>
         <p class="text-text-secondary mt-3 text-base">{{ t('teams.subtitle') }}</p>
         <p class="text-amber-600 mt-2 text-sm font-semibold register-note-bounce">{{ t('teams.registerNote') }}</p>
+        <p class="text-text-secondary mt-1 text-xs">{{ t('teams.registerWarn') }}</p>
         <div class="flex items-center justify-center gap-3 mt-3">
           <span class="text-xs text-text-secondary">Updated {{ timeAgo(lastUpdated) }}</span>
           <button @click="fetchTeams" class="text-xs text-blue-600 hover:text-text-primary transition-colors flex items-center gap-1">
