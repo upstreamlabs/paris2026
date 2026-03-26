@@ -62,7 +62,7 @@ const timeUnits = [
       <!-- Divider line -->
       <div class="flex items-center justify-center gap-6 my-10">
         <div class="h-px flex-1 max-w-24 bg-border"></div>
-        <span class="text-xs text-text-tertiary tracking-[0.25em] uppercase">{{ t('hero.location') }}</span>
+        <span class="text-xs text-text-primary tracking-[0.25em] uppercase">{{ t('hero.location') }}</span>
         <div class="h-px flex-1 max-w-24 bg-border"></div>
       </div>
 
