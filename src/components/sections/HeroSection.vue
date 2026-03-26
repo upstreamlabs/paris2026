@@ -43,9 +43,9 @@ const timeUnits = [
 
       <!-- Eyebrow -->
       <div class="inline-flex items-center gap-3 mb-10">
-        <div class="h-px w-12 bg-border-hover"></div>
-        <span class="text-xs text-text-tertiary font-light tracking-[0.2em] uppercase">{{ t('hero.eyebrow') }}</span>
-        <div class="h-px w-12 bg-border-hover"></div>
+        <div class="h-px w-12 bg-text-primary/30"></div>
+        <span class="text-xs text-text-primary/70 font-light tracking-[0.2em] uppercase">{{ t('hero.eyebrow') }}</span>
+        <div class="h-px w-12 bg-text-primary/30"></div>
       </div>
 
       <!-- Main title -->
@@ -61,9 +61,9 @@ const timeUnits = [
 
       <!-- Divider line -->
       <div class="flex items-center justify-center gap-6 my-10">
-        <div class="h-px flex-1 max-w-24 bg-border"></div>
+        <div class="h-px flex-1 max-w-24 bg-text-primary/30"></div>
         <span class="text-xs text-text-primary tracking-[0.25em] uppercase">{{ t('hero.location') }}</span>
-        <div class="h-px flex-1 max-w-24 bg-border"></div>
+        <div class="h-px flex-1 max-w-24 bg-text-primary/30"></div>
       </div>
 
       <!-- LIVE indicator -->
@@ -85,13 +85,13 @@ const timeUnits = [
           <span class="text-4xl md:text-6xl font-black font-mono text-text-primary tabular-nums inline-block countdown-num" :key="unit.value.value">
             {{ String(unit.value.value).padStart(2, '0') }}
           </span>
-          <span class="text-[10px] text-text-tertiary mt-1 uppercase tracking-[0.15em]">{{ t(unit.key) }}</span>
+          <span class="text-[10px] text-text-primary/60 mt-1 uppercase tracking-[0.15em]">{{ t(unit.key) }}</span>
         </div>
       </div>
 
       <!-- Event ended -->
       <div v-else class="mb-12">
-        <span class="text-lg text-text-tertiary uppercase tracking-widest font-semibold">Event Concluded</span>
+        <span class="text-lg text-text-primary/60 uppercase tracking-widest font-semibold">Event Concluded</span>
       </div>
 
       <!-- CTA -->
