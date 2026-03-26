@@ -4,10 +4,11 @@ const isLocalBackend = typeof window !== 'undefined' && window.location.hostname
 
 export const API_BASE = isLocalBackend ? '' : 'https://paris.mofa.ai'
 
-// Prefix dynamic image URLs (uploads, avatars) with API_BASE
+// Prefix dynamic image URLs with API_BASE when on external hosts
 export function assetUrl(path: string): string {
   if (!path) return ''
   if (path.startsWith('http')) return path
-  if (path.startsWith('/uploads/')) return `${API_BASE}${path}`
+  if (!API_BASE) return path
+  if (path.startsWith('/')) return `${API_BASE}${path}`
   return path
 }
