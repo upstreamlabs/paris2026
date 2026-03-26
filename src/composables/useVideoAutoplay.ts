@@ -2,30 +2,37 @@ import { onMounted } from 'vue'
 
 /**
  * Safari blocks autoplay even with muted+playsinline.
- * This forces .play() on all <video autoplay> elements,
- * retrying on user interaction if needed.
+ * This forces .play() and falls back to showing the poster
+ * as a background image if the video won't play.
  */
 export function useVideoAutoplay() {
   onMounted(() => {
-    function playAll() {
+    function handleVideos() {
       document.querySelectorAll('video[autoplay]').forEach((v) => {
         const video = v as HTMLVideoElement
+
+        // Set poster as background so it shows through if video is black/paused
+        if (video.poster) {
+          video.style.backgroundImage = `url(${video.poster})`
+          video.style.backgroundSize = 'cover'
+          video.style.backgroundPosition = 'center'
+        }
+
         if (video.paused) {
-          video.play().catch(() => {})
+          video.play().catch(() => {
+            // Autoplay blocked — video stays paused, poster background visible
+          })
         }
       })
     }
 
-    // Try immediately
-    playAll()
-
-    // Retry after a short delay (Safari sometimes needs the DOM to settle)
-    setTimeout(playAll, 500)
-    setTimeout(playAll, 2000)
+    handleVideos()
+    setTimeout(handleVideos, 500)
+    setTimeout(handleVideos, 2000)
 
     // Fallback: play on first user interaction
     const onInteract = () => {
-      playAll()
+      handleVideos()
       document.removeEventListener('click', onInteract)
       document.removeEventListener('touchstart', onInteract)
       document.removeEventListener('scroll', onInteract)
