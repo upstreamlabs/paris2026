@@ -12,6 +12,7 @@ import ScheduleSection from '../components/sections/ScheduleSection.vue'
 import JudgingSection from '../components/sections/JudgingSection.vue'
 import TeamsSection from '../components/sections/TeamsSection.vue'
 import FaqSection from '../components/sections/FaqSection.vue'
+import SponsorsSection from '../components/sections/SponsorsSection.vue'
 import CtaSection from '../components/sections/CtaSection.vue'
 
 useScrollReveal()
@@ -31,6 +32,7 @@ useVideoAutoplay()
     <TeamsSection />
     <ScheduleSection />
     <JudgingSection />
+    <SponsorsSection />
     <FaqSection />
     <CtaSection />
   </main>

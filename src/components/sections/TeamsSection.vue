@@ -58,6 +58,23 @@ function timeAgo(date: Date | null) {
   return `${Math.floor(secs / 60)}m ago`
 }
 
+// Twemoji CDN helper
+const twemoji = (code: string) => `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${code}.svg`
+const tw = {
+  crown: twemoji('1f451'),    // 👑
+  sparkles: twemoji('2728'),  // ✨
+  wave: twemoji('1f44b'),     // 👋
+  rocket: twemoji('1f680'),   // 🚀
+  fire: twemoji('1f525'),     // 🔥
+  heart: twemoji('2764'),     // ❤️
+  lock: twemoji('1f512'),     // 🔒
+  bulb: twemoji('1f4a1'),     // 💡
+  link: twemoji('1f517'),     // 🔗
+  star: twemoji('2b50'),      // ⭐
+  eyes: twemoji('1f440'),     // 👀
+  handshake: twemoji('1f91d'),// 🤝
+}
+
 const showModal = ref(false)
 const modalMode = ref<'create' | 'view' | 'edit'>('create')
 const viewingTeam = ref<Team | null>(null)
@@ -96,12 +113,14 @@ function getTrackLabel(trackId: string) {
 }
 
 const modelOptions = [
+  { id: 'MiniCPM', label: 'MiniCPM', icon: assetUrl('/sponsors/minicpm-avatar.webp') },
   { id: 'GLM', label: 'GLM', icon: assetUrl('/sponsors/zhipu-v2.png') },
   { id: 'MiniMax', label: 'MiniMax', icon: assetUrl('/sponsors/minimax.png') },
   { id: 'Kimi', label: 'Kimi', icon: assetUrl('/sponsors/kimi.png') },
 ]
 
 const avatarPresets = [
+  { id: 'minicpm', label: 'MiniCPM', src: assetUrl('/sponsors/minicpm-avatar.webp') },
   { id: 'glm', label: 'GLM', src: assetUrl('/sponsors/zhipu-v2.png') },
   { id: 'minimax', label: 'MiniMax', src: assetUrl('/sponsors/minimax.png') },
   { id: 'kimi', label: 'Kimi', src: assetUrl('/sponsors/kimi.png') },
@@ -334,12 +353,14 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
       <!-- Stats bar -->
       <div class="max-w-2xl mx-auto mb-12 reveal">
         <div class="flex justify-between text-sm mb-3">
-          <span class="text-text-secondary">
+          <span class="text-text-secondary inline-flex items-center gap-1">
+            <img :src="tw.fire" class="w-4 h-4" />
             <span class="text-text-primary font-bold">{{ teams.length }}</span> {{ t('teams.teams') }} ·
             <span class="text-text-primary font-bold">{{ totalMembers }}</span> in teams ·
             <span class="text-text-primary font-bold">{{ totalRegistered }}</span> registered
           </span>
-          <span class="text-text-secondary">
+          <span class="text-text-secondary inline-flex items-center gap-1">
+            <img :src="tw.star" class="w-4 h-4" />
             <span class="text-amber-600 font-bold">{{ spotsLeft }}</span> {{ t('teams.spotsLeft') }}
           </span>
         </div>
@@ -357,7 +378,7 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
       <div class="text-center mb-12 reveal">
         <template v-if="isLoggedIn">
           <button @click="openCreateModal" :disabled="isFull || userHasTeam()" class="px-8 py-4 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            {{ isFull ? t('teams.closedBtn') : userHasTeam() ? 'Already in a team' : t('teams.registerBtn') }}
+            <img v-if="!isFull && !userHasTeam()" :src="tw.rocket" class="w-4 h-4 inline mr-1" />{{ isFull ? t('teams.closedBtn') : userHasTeam() ? 'Already in a team' : t('teams.registerBtn') }}
           </button>
         </template>
         <template v-else>
@@ -389,31 +410,34 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
           <!-- Header -->
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3 min-w-0">
-              <img :src="assetUrl(team.avatar) || assetUrl('/default-avatar.svg')" class="w-11 h-11 rounded-full shrink-0 object-cover border border-border" />
+              <div class="relative">
+                <img :src="assetUrl(team.avatar) || assetUrl('/default-avatar.svg')" class="w-12 h-12 rounded-full shrink-0 object-cover border-2 border-border group-hover:border-accent-blue transition-colors" />
+                <img v-if="team.model && getModelIcon(team.model)" :src="getModelIcon(team.model)" :alt="team.model" class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border border-bg-card bg-bg-elevated" />
+              </div>
               <div class="min-w-0">
                 <h3 class="font-bold text-text-primary text-base truncate group-hover:text-accent transition-colors">{{ team.name }}</h3>
-                <div class="flex items-center gap-2 mt-0.5">
-                  <template v-for="theme in (team.themes || []).slice(0, 3)" :key="theme">
-                    <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-3.5 h-3.5 theme-icon" :title="getTrackLabel(theme)" />
+                <div class="flex items-center gap-1.5 mt-1">
+                  <template v-for="theme in (team.themes || []).slice(0, 4)" :key="theme">
+                    <img v-if="getTrackIcon(theme)" :src="getTrackIcon(theme)" class="w-5 h-5" :title="getTrackLabel(theme)" />
                   </template>
-                  <img v-if="team.model && getModelIcon(team.model)" :src="getModelIcon(team.model)" :alt="team.model" class="w-3.5 h-3.5 rounded-[10px]" />
                 </div>
               </div>
             </div>
-            <span class="text-xs font-mono text-text-muted shrink-0">{{ getTeamMembers(team.id).length }}/{{ team.maxSize || 3 }}</span>
+            <span class="text-xs font-mono text-text-muted shrink-0 bg-bg-elevated/80 px-2 py-1 rounded inline-flex items-center gap-1"><img :src="tw.eyes" class="w-3.5 h-3.5" />{{ getTeamMembers(team.id).length }}/{{ team.maxSize || 3 }}</span>
           </div>
 
           <!-- Member slots grid -->
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
-            <div v-for="member in getTeamMembers(team.id)" :key="member.id" class="flex items-center gap-2 px-3 py-2 bg-bg-elevated/60 border border-border-subtle">
-              <img :src="assetUrl(member.avatar) || assetUrl('/default-avatar.svg')" class="w-6 h-6 rounded-full shrink-0 object-cover" />
+            <div v-for="member in getTeamMembers(team.id)" :key="member.id" class="flex items-center gap-2 px-3 py-2.5 bg-bg-elevated/60 border border-border-subtle rounded-lg">
+              <img :src="assetUrl(member.avatar) || assetUrl('/default-avatar.svg')" class="w-7 h-7 rounded-full shrink-0 object-cover" />
               <div class="min-w-0">
-                <span v-if="member.id === team.leaderId" class="text-[9px] text-amber-600 block leading-tight">Lead</span>
+                <span v-if="member.id === team.leaderId" class="text-[9px] text-amber-500 font-semibold block leading-tight flex items-center gap-0.5"><img :src="tw.crown" class="w-2.5 h-2.5" /> Lead</span>
                 <span class="text-xs text-text-secondary truncate block">{{ member.name }}</span>
               </div>
             </div>
             <!-- Empty slots -->
-            <div v-for="n in Math.max(0, (team.maxSize || 3) - getTeamMembers(team.id).length)" :key="'empty-' + n" class="flex items-center justify-center px-3 py-2 border border-dashed border-border-hover text-text-muted text-xs">
+            <div v-for="n in Math.max(0, (team.maxSize || 3) - getTeamMembers(team.id).length)" :key="'empty-' + n" class="flex items-center justify-center gap-1.5 px-3 py-2.5 border border-dashed border-border-hover text-text-muted text-xs rounded-lg hover:border-accent-blue/30 hover:text-text-secondary transition-colors">
+              <img :src="tw.handshake" class="w-4 h-4 opacity-40" />
               Open
             </div>
           </div>
@@ -422,12 +446,10 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
           <div class="mt-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
               <a v-if="team.githubRepo" :href="team.githubRepo" target="_blank" @click.stop class="inline-flex items-center gap-1 text-[11px] text-text-secondary hover:text-blue-600 transition-colors">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                Repo
+                <img :src="tw.link" class="w-3.5 h-3.5" /> Repo
               </a>
               <span v-if="team.locked" class="text-[10px] text-text-muted inline-flex items-center gap-0.5">
-                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
-                Locked
+                <img :src="tw.lock" class="w-3 h-3" /> Locked
               </span>
             </div>
             <button
@@ -435,13 +457,13 @@ const inputClass = 'w-full px-4 py-2.5 bg-input-bg border border-input-border te
               class="inline-flex items-center gap-1 text-xs transition-colors"
               :class="likedTeams.has(team.id) ? 'text-red-500' : 'text-text-muted hover:text-red-400'"
             >
-              <svg class="w-4 h-4" :fill="likedTeams.has(team.id) ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+              <img :src="tw.heart" class="w-4 h-4" :class="likedTeams.has(team.id) ? '' : 'opacity-30 grayscale'" />
               {{ team.likes || 0 }}
             </button>
           </div>
 
           <!-- Project idea -->
-          <p v-if="team.projectIdea" class="mt-3 pt-3 border-t border-border-subtle text-xs text-text-secondary leading-relaxed line-clamp-2 italic">"{{ team.projectIdea }}"</p>
+          <p v-if="team.projectIdea" class="mt-3 pt-3 border-t border-border-subtle text-xs text-text-secondary leading-relaxed line-clamp-2 italic flex items-start gap-1.5"><img :src="tw.bulb" class="w-3.5 h-3.5 shrink-0 mt-0.5" /> "{{ team.projectIdea }}"</p>
         </div>
       </div>
 

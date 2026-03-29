@@ -138,7 +138,9 @@ export default {
   },
   awards: {
     title: '奖项',
-    subtitle: '5 个奖项，表彰在创新性、技术深度和实际影响力方面表现最佳的项目。',
+    subtitle: '6 个奖项，表彰在创新性、技术深度和实际影响力方面表现最佳的项目。',
+    minicpm: 'MiniCPM 奖',
+    minicpmBy: '由 MiniCPM 赞助',
     zhipu: '智谱奖',
     zhipuBy: '由智谱 AI 赞助',
     minimax: 'MiniMax 奖',

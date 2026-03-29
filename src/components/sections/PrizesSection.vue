@@ -7,6 +7,7 @@ const { t } = useI18n()
 const upstreamLogo = 'https://avatars.githubusercontent.com/u/238420183?s=200&v=4'
 
 const awards = [
+  { key: 'minicpm', color: '#4f46e5', img: assetUrl('/sponsors/minicpm-avatar.webp') },
   { key: 'zhipu', color: '#3b82f6', img: assetUrl('/sponsors/zhipu-v2.png') },
   { key: 'minimax', color: '#f43f5e', img: assetUrl('/sponsors/minimax.png') },
   { key: 'moonshot', color: '#a855f7', img: assetUrl('/sponsors/kimi.png') },
@@ -27,8 +28,8 @@ const awards = [
       <p class="text-center text-text-secondary mb-16 reveal">{{ t('awards.subtitle') }}</p>
 
       <!-- Sponsor awards: top row -->
-      <div class="grid md:grid-cols-3 gap-10 max-w-4xl mx-auto mb-12 reveal reveal-delay-1">
-        <div v-for="award in awards.slice(0, 3)" :key="award.key" class="flex flex-col items-center text-center">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-5xl mx-auto mb-12 reveal reveal-delay-1">
+        <div v-for="award in awards.slice(0, 4)" :key="award.key" class="flex flex-col items-center text-center">
           <div class="medal mb-4" :style="{ '--medal-color': award.color }">
             <div class="medal-ribbon"></div>
             <div class="medal-circle">
@@ -41,7 +42,7 @@ const awards = [
       </div>
       <!-- Upstream awards: bottom row -->
       <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto reveal reveal-delay-2">
-        <div v-for="award in awards.slice(3)" :key="award.key" class="flex flex-col items-center text-center">
+        <div v-for="award in awards.slice(4)" :key="award.key" class="flex flex-col items-center text-center">
           <div class="medal mb-4" :style="{ '--medal-color': award.color }">
             <div class="medal-ribbon"></div>
             <div class="medal-circle">

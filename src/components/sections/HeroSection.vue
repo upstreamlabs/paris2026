@@ -58,19 +58,11 @@ const timeUnits = [
           <span class="font-semibold text-text-primary">MiniMax</span>,
           <span class="font-semibold text-text-primary">MiniCPM</span>
         </p>
-        <div class="grid grid-cols-4 gap-4 md:gap-6 mt-6 max-w-3xl mx-auto">
-          <div class="flex items-center justify-center h-14 md:h-16">
-            <img src="/sponsors/minicpm.svg" alt="MiniCPM" class="max-h-10 w-auto max-w-[140px] object-contain brightness-0 invert opacity-90" />
-          </div>
-          <div class="flex items-center justify-center h-14 md:h-16">
-            <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI (GLM)" class="max-h-10 w-auto max-w-[140px] object-contain brightness-0 invert opacity-90" />
-          </div>
-          <div class="flex items-center justify-center h-14 md:h-16">
-            <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI (Kimi)" class="max-h-10 w-auto max-w-[140px] object-contain brightness-0 invert opacity-90" />
-          </div>
-          <div class="flex items-center justify-center h-14 md:h-16">
-            <img src="/sponsors/minimax-wide.webp" alt="MiniMax" class="max-h-10 w-auto max-w-[140px] object-contain brightness-0 invert opacity-90" />
-          </div>
+        <div class="grid grid-cols-2 md:flex md:items-center md:justify-center gap-6 md:gap-14 mt-6 max-w-sm md:max-w-none mx-auto">
+          <div class="flex items-center justify-center"><img src="/sponsors/minicpm.svg" alt="MiniCPM" class="h-7 md:h-11 w-auto object-contain brightness-0 invert opacity-90" /></div>
+          <div class="flex items-center justify-center"><img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI (GLM)" class="h-8 md:h-[5.5rem] w-auto object-contain brightness-0 invert opacity-90" /></div>
+          <div class="flex items-center justify-center"><img src="/sponsors/kimi-wide.webp" alt="Moonshot AI (Kimi)" class="h-6 md:h-9 w-auto object-contain brightness-0 invert opacity-90" /></div>
+          <div class="flex items-center justify-center"><img src="/sponsors/minimax-wide.webp" alt="MiniMax" class="h-6 md:h-9 w-auto object-contain brightness-0 invert opacity-90" /></div>
         </div>
       </div>
 
@@ -96,7 +88,7 @@ const timeUnits = [
       </div>
 
       <!-- Countdown with glass cards -->
-      <div v-else-if="!isOver" class="flex justify-center gap-2 md:gap-4 mb-12">
+      <div v-else-if="!isOver" class="flex justify-center gap-2 md:gap-4 mb-6">
         <div
           v-for="unit in timeUnits"
           :key="unit.key"
@@ -110,7 +102,7 @@ const timeUnits = [
       </div>
 
       <!-- Event ended -->
-      <div v-else class="mb-12">
+      <div v-else class="mb-6">
         <span class="text-lg text-text-primary/60 uppercase tracking-widest font-semibold">Event Concluded</span>
       </div>
 

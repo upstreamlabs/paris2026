@@ -21,15 +21,18 @@ const { t } = useI18n()
 
       <!-- Sponsors -->
       <h3 class="text-center text-sm text-text-secondary uppercase tracking-wider mb-6 reveal reveal-delay-2">{{ t('sponsors.title') }}</h3>
-      <div class="grid md:grid-cols-3 gap-8 mb-16 max-w-3xl mx-auto reveal reveal-delay-2">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 max-w-4xl mx-auto reveal reveal-delay-2">
+        <a href="https://github.com/OpenBMB/MiniCPM" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
+          <img src="/sponsors/minicpm.svg" alt="MiniCPM" class="max-h-12 w-auto max-w-[180px] object-contain" />
+        </a>
         <a href="https://z.ai/" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
-          <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI" class="h-14 w-auto max-w-[240px] object-contain" />
+          <img src="/sponsors/zhipu-wide.webp" alt="Zhipu AI" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
         <a href="https://www.minimaxi.com" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
-          <img src="/sponsors/minimax-logo.webp" alt="MiniMax" class="h-8 w-auto max-w-[180px] object-contain" />
+          <img src="/sponsors/minimax-wide.webp" alt="MiniMax" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
         <a href="https://www.kimi.com" target="_blank" class="glass-card glass-card-glow glow-border sponsor-logo-card p-8 flex items-center justify-center transition-all group block h-28">
-          <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI" class="h-8 w-auto max-w-[180px] object-contain" />
+          <img src="/sponsors/kimi-wide.webp" alt="Moonshot AI" class="max-h-10 w-auto max-w-[180px] object-contain" />
         </a>
       </div>
 
