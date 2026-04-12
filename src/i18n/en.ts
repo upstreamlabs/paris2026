@@ -168,7 +168,7 @@ export default {
         { time: '08:30–09:30', title: 'Check-in', desc: '' },
         { time: '09:30–10:00', title: 'GOSIM Keynote', desc: '' },
         { time: '10:00–12:00', title: 'Hacking', desc: 'Final push + demo prep' },
-        { time: '12:00–13:30', title: 'Demo & Presentations', desc: 'Each team presents their project, followed by Q&A' },
+        { time: '12:00–13:30', title: 'Demo & Presentations', desc: 'Flash Demo Presentation + Live Q&A' },
         { time: '13:30–14:30', title: 'Judging', desc: '' },
         { time: 'Afternoon', title: 'Awards Ceremony', desc: 'At GOSIM closing session' },
         { time: '18:30–20:00', title: 'Dinner & Networking', desc: 'Winners, sponsors & judges' },
@@ -251,7 +251,7 @@ export default {
     items: [
       { q: 'Who can participate?', a: 'Anyone who can attend in person at STATION F in Paris — AI engineers, open-source contributors, startup founders, researchers, indie developers, students, and creators from around the world. Whether you\'re building your first agent or your fiftieth — if you build, you belong here.' },
       { q: 'How big can teams be?', a: 'Teams of 1–3 people. You can register solo and find teammates during the team formation session on Day 1.' },
-      { q: 'What do I need to submit?', a: 'A working demo, an open-source GitHub repository, and a short slide deck. Each team gets up to 5 minutes to present, followed by 3 minutes of Q&A. Exact timing may be adjusted — check back for updates.' },
+      { q: 'What do I need to submit?', a: 'A working demo, an open-source GitHub repository, and a short slide deck. Each team does a Flash Demo Presentation + Live Q&A. Exact timing may be adjusted — check back for updates.' },
       { q: 'Do I have to use a specific AI model?', a: 'You\'re encouraged to use the sponsor-provided models (GLM, MiniMax, Kimi) — all participants get a generous amount of token credits. But you can also use other models or frameworks.' },
       { q: 'Is it free to participate?', a: 'Yes! Registration is free.' },
       { q: 'How many awards are there?', a: 'There are 5 awards totaling $10,000 — the MiniMax Award, Moonshot Award, Zhipu Award, and two GOSIM Awards. Prizes include cash and LLM token credits.' },
