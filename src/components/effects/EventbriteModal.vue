@@ -19,7 +19,7 @@ const show = ref(true)
             <div class="inline-block px-3 py-1 bg-accent-red/20 text-red-400 text-[10px] font-bold tracking-widest uppercase rounded mb-3">Required for entry</div>
             <h2 class="text-xl font-bold text-text-primary mb-2">Register on Eventbrite</h2>
             <p class="text-sm text-text-secondary leading-relaxed">
-              You also need a <strong class="text-text-primary">free Eventbrite ticket</strong> to enter STATION F on event day.
+              Get your <strong class="text-text-primary">free Eventbrite ticket</strong> to enter STATION F on event days.
             </p>
           </div>
 
