@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuth } from '../../composables/useAuth'
 
+const { isLoggedIn } = useAuth()
 const EB_URL = 'https://www.eventbrite.com/e/1984013840806/?discount=AGENTICHACKATHON26'
-const show = ref(true)
+const dismissed = ref(false)
 </script>
 
 <template>
   <Teleport to="body">
     <Transition enter-active-class="transition duration-300" enter-from-class="opacity-0" leave-active-class="transition duration-150" leave-to-class="opacity-0">
-      <div v-if="show" class="fixed inset-0 z-[250] flex items-center justify-center p-4">
+      <div v-if="isLoggedIn && !dismissed" class="fixed inset-0 z-[250] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" />
         <div class="relative w-full max-w-md bg-bg-primary border border-accent-yellow/50 shadow-2xl p-6">
-          <button @click="show = false" class="absolute top-3 right-3 text-text-muted hover:text-text-primary">
+          <button @click="dismissed = true" class="absolute top-3 right-3 text-text-muted hover:text-text-primary">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
 
@@ -36,7 +38,7 @@ const show = ref(true)
             Join Discord
           </a>
 
-          <button @click="show = false" class="block w-full mt-2 py-2 text-xs text-text-muted hover:text-text-secondary text-center uppercase tracking-widest">
+          <button @click="dismissed = true" class="block w-full mt-2 py-2 text-xs text-text-muted hover:text-text-secondary text-center uppercase tracking-widest">
             Close
           </button>
         </div>
