@@ -338,24 +338,24 @@ async function saveProfile() {
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-3 lg:gap-5">
+      <nav class="hidden lg:flex items-center gap-1.5 xl:gap-3">
         <a
           v-for="item in navItems"
           :key="item.href"
           @click.prevent="scrollTo(item.href)"
-          class="text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
+          class="text-[11px] xl:text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
         >
           {{ item.label }}
         </a>
         <router-link
           to="/vision"
-          class="text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
+          class="text-[11px] xl:text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
         >
           Vision
         </router-link>
         <router-link
           to="/rules"
-          class="text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
+          class="text-[11px] xl:text-xs text-text-primary/80 hover:text-text-primary transition-colors cursor-pointer relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
         >
           Rules
         </router-link>
@@ -363,7 +363,7 @@ async function saveProfile() {
         <!-- Theme toggle -->
         <button
           @click="toggleTheme"
-          class="text-text-tertiary hover:text-text-primary transition-colors p-1.5 border border-border"
+          class="text-text-tertiary hover:text-text-primary transition-colors p-1 border border-border"
           :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
         >
           <svg v-if="isDark" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -373,7 +373,7 @@ async function saveProfile() {
         <!-- Language toggle -->
         <button
           @click="toggleLocale"
-          class="text-xs text-text-tertiary hover:text-text-primary transition-colors font-mono border border-border px-2 py-1"
+          class="text-[10px] text-text-tertiary hover:text-text-primary transition-colors font-mono border border-border px-1.5 py-0.5"
         >
           {{ locale === 'en' ? '中文' : 'EN' }}
         </button>
@@ -386,7 +386,7 @@ async function saveProfile() {
                 <img :src="assetUrl(user.avatar) || (user.githubId ? `https://avatars.githubusercontent.com/${user.githubId.replace('@', '')}` : '/default-avatar.svg')" class="w-7 h-7 rounded-full object-cover border border-border" />
                 <span v-if="pendingCount > 0" class="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 bg-accent-red text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none border-2 border-bg-primary">{{ pendingCount }}</span>
               </span>
-              <span class="max-w-[80px] truncate">{{ user.name }}</span>
+              <span class="max-w-[60px] xl:max-w-[80px] truncate text-[11px]">{{ user.name }}</span>
             </button>
             <Transition
               enter-active-class="transition-all duration-150"
@@ -423,7 +423,7 @@ async function saveProfile() {
       </nav>
 
       <!-- Mobile Toggle -->
-      <button @click="mobileOpen = !mobileOpen" class="md:hidden text-text-secondary">
+      <button @click="mobileOpen = !mobileOpen" class="lg:hidden text-text-secondary">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path v-if="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -440,7 +440,7 @@ async function saveProfile() {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-4"
     >
-      <div v-if="mobileOpen" class="md:hidden bg-bg-primary border-t border-border px-6 py-4">
+      <div v-if="mobileOpen" class="lg:hidden bg-bg-primary border-t border-border px-6 py-4">
         <a
           v-for="item in navItems"
           :key="item.href"
