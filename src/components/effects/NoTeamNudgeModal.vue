@@ -20,7 +20,6 @@ const shouldShow = computed(() =>
   && user.value
   && !hasTeam.value
   && !dismissed.value
-  && !toggledOn.value
 )
 
 watch(() => user.value?.id, () => {
@@ -84,7 +83,7 @@ const upcomingTeamsCount = computed(() => teams.value.filter(t => !t.locked && t
               v-if="!toggledOn"
               @click="enableLookingForTeam"
               :disabled="toggling"
-              class="w-full py-3 bg-bg-secondary border border-amber-400/40 text-amber-300 text-sm font-bold uppercase tracking-widest hover:bg-amber-400/10 transition-colors disabled:opacity-50">
+              class="w-full py-2 text-xs text-text-muted hover:text-text-secondary uppercase tracking-widest disabled:opacity-50 transition-colors">
               {{ toggling ? 'Saving...' : 'Just mark me as Looking for Team' }}
             </button>
             <p v-else class="text-center text-xs text-emerald-400">You're marked as Looking for Team. Team leaders can now find you.</p>
