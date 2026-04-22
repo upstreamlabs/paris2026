@@ -77,6 +77,9 @@ const totalUsers = computed(() => profiles.value.length)
 const totalTeams = computed(() => teams.value.length)
 const checkedIn = computed(() => profiles.value.filter(p => p.checked_in).length)
 const approved = computed(() => profiles.value.filter(p => p.approved).length)
+const confirmedYes = computed(() => profiles.value.filter(p => p.confirmed_attendance === 'yes').length)
+const confirmedNo = computed(() => profiles.value.filter(p => p.confirmed_attendance === 'no').length)
+const confirmedPending = computed(() => profiles.value.filter(p => !p.confirmed_attendance).length)
 const noTeam = computed(() => profiles.value.filter(p => !p.team_id).length)
 const inTeam = computed(() => profiles.value.filter(p => p.team_id).length)
 const lookingForTeam = computed(() => profiles.value.filter(p => p.looking_for_team && !p.team_id).length)
@@ -344,6 +347,11 @@ onMounted(() => { if (authed.value) loadData() })
           <p class="text-xs text-gray-500 uppercase">Approved</p>
           <p class="text-[10px] text-gray-600 mt-1">{{ totalUsers - approved }} pending</p>
         </div>
+        <div class="bg-gray-900 border border-gray-800 p-4">
+          <p class="text-3xl font-bold text-emerald-400">{{ confirmedYes }}</p>
+          <p class="text-xs text-gray-500 uppercase">RSVP Yes</p>
+          <p class="text-[10px] text-gray-600 mt-1">{{ confirmedNo }} no · {{ confirmedPending }} pending</p>
+        </div>
       </div>
 
       <!-- Stats Row 2: Breakdown -->
@@ -467,6 +475,7 @@ onMounted(() => { if (authed.value) loadData() })
                 <th class="py-3 px-3">Team</th>
                 <th class="py-3 px-3 text-center">Approved</th>
                 <th class="py-3 px-3 text-center">Check-in</th>
+                <th class="py-3 px-3 text-center">RSVP</th>
                 <th class="py-3 px-3">Registered</th>
                 <th class="py-3 px-3">Actions</th>
               </tr>
@@ -494,6 +503,11 @@ onMounted(() => { if (authed.value) loadData() })
                     :class="p.checked_in ? 'bg-green-600 border-green-600 text-white' : 'border-gray-600 hover:border-green-500'">
                     <svg v-if="p.checked_in" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                   </button>
+                </td>
+                <td class="py-3 px-3 text-center">
+                  <span v-if="p.confirmed_attendance === 'yes'" class="text-emerald-400 text-xs font-bold">YES</span>
+                  <span v-else-if="p.confirmed_attendance === 'no'" class="text-red-400 text-xs font-bold">NO</span>
+                  <span v-else class="text-gray-600 text-xs">—</span>
                 </td>
                 <td class="py-3 px-3 text-gray-500 text-xs">{{ new Date(p.created_at).toLocaleDateString() }}</td>
                 <td class="py-3 px-3">

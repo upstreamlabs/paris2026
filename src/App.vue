@@ -12,6 +12,7 @@ import InvitationsModal from './components/effects/InvitationsModal.vue'
 import ModelNudgeModal from './components/effects/ModelNudgeModal.vue'
 import NoTeamNudgeModal from './components/effects/NoTeamNudgeModal.vue'
 import EventbriteModal from './components/effects/EventbriteModal.vue'
+import RSVPModal from './components/effects/RSVPModal.vue'
 import RulesPage from './pages/RulesPage.vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -53,6 +54,7 @@ watch(isLoggedIn, async (v) => {
   <ModelNudgeModal />
   <NoTeamNudgeModal />
   <EventbriteModal />
+  <RSVPModal />
 
   <!-- Floating QR button (logged in only) -->
   <div v-if="isLoggedIn" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">

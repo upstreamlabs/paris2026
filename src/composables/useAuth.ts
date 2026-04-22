@@ -19,6 +19,7 @@ export interface User {
   teamId: string | null
   lookingForTeam: boolean
   passwordChanged: boolean
+  confirmedAttendance: string | null
   createdAt: string
 }
 
@@ -89,6 +90,7 @@ function profileRowToUser(row: Record<string, any>, email?: string): User {
     teamId: row.team_id ?? null,
     lookingForTeam: row.looking_for_team ?? false,
     passwordChanged: row.password_changed ?? false,
+    confirmedAttendance: row.confirmed_attendance ?? null,
     createdAt: row.created_at ?? '',
   }
 }
@@ -112,7 +114,7 @@ export function provideAuth() {
         email: session.user.email,
         githubId: '', role: '', avatar: '', themes: [], preferredModel: '',
         bio: '', discord: '', twitter: '', telegram: '', linkedin: '', website: '',
-        teamId: null, lookingForTeam: false, passwordChanged: true, createdAt: session.user.created_at,
+        teamId: null, lookingForTeam: false, passwordChanged: true, confirmedAttendance: null, createdAt: session.user.created_at,
       }
     }
     isLoggedIn.value = true
