@@ -14,7 +14,7 @@ async function sha256hex(str: string): Promise<string> {
 
 async function checkPass() {
   const hash = await sha256hex(passInput.value)
-  const { data } = await supabase.from('admin_config').select('value').eq('key', 'admin_pass_hash').single()
+  const { data } = await supabase.from('admin_config').select('value').eq('key', 'export_pass_hash').single()
   if (data && data.value === hash) {
     authed.value = true
     await loadData()
