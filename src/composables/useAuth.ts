@@ -238,6 +238,7 @@ export function provideAuth() {
       linkedin: data.linkedin,
       website: data.website,
       looking_for_team: data.lookingForTeam,
+      confirmed_attendance: data.confirmedAttendance,
       team_id: data.teamId,
     }).eq('id', user.value.id)
     if (updateError) { error.value = updateError.message; return false }

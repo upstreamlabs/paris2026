@@ -255,6 +255,7 @@ const profileTelegram = ref('')
 const profileLinkedin = ref('')
 const profileWebsite = ref('')
 const profileLookingForTeam = ref(false)
+const profileRSVP = ref<string | null>(null)
 const profileLoading = ref(false)
 
 const trackOptions = [
@@ -292,6 +293,7 @@ async function openProfileModal() {
     profileLinkedin.value = user.value.linkedin || ''
     profileWebsite.value = user.value.website || ''
     profileLookingForTeam.value = user.value.lookingForTeam
+    profileRSVP.value = user.value.confirmedAttendance
     profileQr.value = await QRCode.toDataURL(`https://create.gosim.org/profile/${user.value.id}`, {
       width: 200, margin: 1, color: { dark: '#000000', light: '#ffffff' },
     })
@@ -320,6 +322,7 @@ async function saveProfile() {
     linkedin: profileLinkedin.value,
     website: profileWebsite.value,
     lookingForTeam: profileLookingForTeam.value,
+    confirmedAttendance: profileRSVP.value,
   })
   profileLoading.value = false
   if (ok) showProfileModal.value = false
@@ -854,6 +857,21 @@ async function saveProfile() {
               </div>
               <span class="text-sm text-text-secondary">Looking for a team</span>
             </label>
+            <div class="pt-2">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2">Attendance (May 5–6, STATION F)</p>
+              <div class="flex gap-2">
+                <button type="button" @click="profileRSVP = 'yes'"
+                  class="flex-1 py-2 text-xs font-bold uppercase tracking-widest border transition-colors"
+                  :class="profileRSVP === 'yes' ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-border text-text-muted hover:border-emerald-500'">
+                  Yes, I'll be there
+                </button>
+                <button type="button" @click="profileRSVP = 'no'"
+                  class="flex-1 py-2 text-xs font-bold uppercase tracking-widest border transition-colors"
+                  :class="profileRSVP === 'no' ? 'bg-red-600 border-red-600 text-white' : 'border-border text-text-muted hover:border-red-500'">
+                  Can't make it
+                </button>
+              </div>
+            </div>
             <button type="submit" :disabled="profileLoading" class="w-full py-3 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50">
               {{ profileLoading ? 'Saving...' : 'Save Profile' }}
             </button>
