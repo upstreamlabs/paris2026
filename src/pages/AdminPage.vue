@@ -61,17 +61,34 @@ async function showQr(user: any) {
 // Team view modal
 const viewingTeam = ref<any>(null)
 
-// Announcement
+// Announcements
 const announcementText = ref('')
 const announcementSaving = ref(false)
+const announcementHistory = ref<any[]>([])
 async function loadAnnouncement() {
-  const { data } = await supabase.from('admin_config').select('value').eq('key', 'announcement').single()
-  announcementText.value = data?.value || ''
+  const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false }).limit(20)
+  announcementHistory.value = data || []
+  const active = (data || []).find((a: any) => a.active)
+  announcementText.value = active?.content || ''
 }
-async function saveAnnouncement() {
+async function pushAnnouncement() {
+  const content = announcementText.value.trim()
+  if (!content) return
   announcementSaving.value = true
-  await supabase.from('admin_config').update({ value: announcementText.value }).eq('key', 'announcement')
+  await supabase.from('announcements').update({ active: false }).eq('active', true)
+  await supabase.from('announcements').insert({ content, active: true })
   announcementSaving.value = false
+  await loadAnnouncement()
+}
+async function clearAnnouncement() {
+  await supabase.from('announcements').update({ active: false }).eq('active', true)
+  announcementText.value = ''
+  await loadAnnouncement()
+}
+async function reactivateAnnouncement(id: string) {
+  await supabase.from('announcements').update({ active: false }).eq('active', true)
+  await supabase.from('announcements').update({ active: true }).eq('id', id)
+  await loadAnnouncement()
 }
 
 // Submissions
@@ -385,15 +402,27 @@ onMounted(() => { if (authed.value) loadData() })
       <!-- Announcement Editor -->
       <div class="mb-8 p-4 bg-gray-900 border border-amber-500/30">
         <p class="text-xs text-amber-400 uppercase tracking-wider mb-2 font-bold">Live Announcement Banner</p>
-        <div class="flex gap-2">
-          <input v-model="announcementText" type="text" placeholder="Type announcement (empty = hidden)"
+        <div class="flex gap-2 mb-3">
+          <input v-model="announcementText" type="text" placeholder="Type new announcement..."
             class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 text-white text-sm focus:border-amber-500 focus:outline-none" />
-          <button @click="saveAnnouncement" :disabled="announcementSaving"
+          <button @click="pushAnnouncement" :disabled="announcementSaving || !announcementText.trim()"
             class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-sm font-bold uppercase tracking-widest disabled:opacity-50">
             {{ announcementSaving ? '...' : 'Push' }}
           </button>
+          <button @click="clearAnnouncement"
+            class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-400 text-sm border border-gray-700">
+            Clear
+          </button>
         </div>
-        <p class="text-[10px] text-gray-600 mt-1">Updates instantly on the website via realtime. Clear text to hide.</p>
+        <div v-if="announcementHistory.length" class="space-y-1">
+          <p class="text-[10px] text-gray-600 uppercase tracking-wider mb-1">History (click to reactivate)</p>
+          <button v-for="a in announcementHistory" :key="a.id" @click="reactivateAnnouncement(a.id)"
+            class="w-full text-left px-3 py-1.5 text-xs rounded transition-colors flex items-center justify-between gap-2"
+            :class="a.active ? 'bg-amber-900/30 text-amber-400 border border-amber-500/30' : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800'">
+            <span class="truncate">{{ a.content }}</span>
+            <span class="text-[10px] text-gray-600 shrink-0">{{ new Date(a.created_at).toLocaleString() }}</span>
+          </button>
+        </div>
       </div>
 
       <!-- Submissions -->

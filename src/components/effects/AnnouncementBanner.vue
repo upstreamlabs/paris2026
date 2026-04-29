@@ -5,17 +5,15 @@ import { supabase } from '../../lib/supabase'
 const text = ref('')
 
 async function load() {
-  const { data } = await supabase.from('admin_config').select('value').eq('key', 'announcement').single()
-  text.value = data?.value || ''
+  const { data } = await supabase.from('announcements').select('content').eq('active', true).order('created_at', { ascending: false }).limit(1).single()
+  text.value = data?.content || ''
 }
 
 onMounted(() => {
   load()
   supabase
     .channel('announcement-realtime')
-    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'admin_config', filter: "key=eq.announcement" }, (payload: any) => {
-      text.value = payload.new?.value || ''
-    })
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'announcements' }, () => load())
     .subscribe()
 })
 </script>
