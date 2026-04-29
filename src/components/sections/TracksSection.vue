@@ -59,7 +59,7 @@ const themeColors: Record<string, string> = {
       </div>
 
       <div class="max-w-3xl mx-auto text-center mb-16 reveal reveal-delay-1">
-        <p class="text-text-secondary leading-relaxed">
+        <p class="text-text-primary/80 leading-relaxed">
           {{ t('tracks.intro') }}
         </p>
       </div>
@@ -83,9 +83,9 @@ const themeColors: Record<string, string> = {
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-3 mb-1">
                 <h3 class="heading-serif text-xl text-text-primary">{{ theme.title }}</h3>
-                <span class="text-sm text-text-muted">{{ theme.subtitle }}</span>
+                <span class="text-sm text-text-secondary">{{ theme.subtitle }}</span>
               </div>
-              <p class="text-text-secondary text-sm leading-relaxed">{{ theme.description }}</p>
+              <p class="text-text-primary/75 text-sm leading-relaxed">{{ theme.description }}</p>
               <span v-if="expandedTheme !== theme.number" class="inline-flex items-center gap-1 text-xs text-text-muted mt-2 group-hover:text-text-secondary transition-colors">
                 Click to explore
                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -103,7 +103,7 @@ const themeColors: Record<string, string> = {
           <!-- Expanded content -->
           <Transition name="expand">
             <div v-if="expandedTheme === theme.number" class="relative mt-6 pl-11">
-              <p class="text-text-secondary text-sm leading-relaxed mb-6">{{ theme.detail }}</p>
+              <p class="text-text-primary/75 text-sm leading-relaxed mb-6">{{ theme.detail }}</p>
               <div>
                 <h4 class="text-xs text-text-muted uppercase tracking-wider mb-3 font-semibold">Possible Directions</h4>
                 <div class="flex flex-wrap gap-2">

@@ -243,6 +243,7 @@ const showUserDropdown = ref(false)
 
 // Profile edit modal
 const showProfileModal = ref(false)
+const profileEditing = ref(false)
 const profileName = ref('')
 const profileGithubId = ref('')
 const profileRole = ref('')
@@ -298,6 +299,7 @@ async function openProfileModal() {
       width: 200, margin: 1, color: { dark: '#000000', light: '#ffffff' },
     })
   }
+  profileEditing.value = false
   showProfileModal.value = true
 }
 
@@ -325,7 +327,7 @@ async function saveProfile() {
     confirmedAttendance: profileRSVP.value,
   })
   profileLoading.value = false
-  if (ok) showProfileModal.value = false
+  if (ok) profileEditing.value = false
 }
 </script>
 
@@ -401,7 +403,7 @@ async function saveProfile() {
             >
               <div v-if="showUserDropdown" class="absolute right-0 top-full mt-2 w-44 bg-bg-card border border-border shadow-lg py-1 z-50">
                 <button @click="openProfileModal" class="w-full text-left px-4 py-2 text-sm text-text-tertiary hover:text-text-primary hover:bg-bg-elevated transition-colors">
-                  Edit Profile
+                  My Profile
                 </button>
                 <button v-if="isLoggedIn" @click="goToMyTeam(); showUserDropdown = false" class="w-full text-left px-4 py-2 text-sm text-text-tertiary hover:text-text-primary hover:bg-bg-elevated transition-colors flex items-center justify-between">
                   <span>My Team</span>
@@ -488,7 +490,7 @@ async function saveProfile() {
             <span class="text-sm text-text-secondary truncate">{{ user.name }}</span>
           </div>
           <button @click="openProfileModal(); mobileOpen = false" class="block py-3 text-text-tertiary hover:text-text-primary transition-colors text-sm">
-            Edit Profile
+            My Profile
           </button>
           <button @click="handleLogout" class="block py-3 text-text-tertiary hover:text-text-primary transition-colors text-sm">
             Logout
@@ -755,11 +757,54 @@ async function saveProfile() {
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
 
-          <h3 class="text-lg font-bold text-text-primary mb-6">Edit Profile</h3>
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold text-text-primary">{{ profileEditing ? 'Edit Profile' : 'My Profile' }}</h3>
+            <button v-if="!profileEditing" @click="profileEditing = true" class="text-xs text-accent hover:text-text-primary transition-colors uppercase tracking-widest">Edit</button>
+            <button v-else @click="profileEditing = false" class="text-xs text-text-muted hover:text-text-primary transition-colors uppercase tracking-widest">Cancel</button>
+          </div>
 
-          <div v-if="authError" class="mb-4 p-3  bg-badge-danger-bg border border-accent-red/30 text-badge-danger-text text-sm">{{ authError }}</div>
+          <!-- View Mode -->
+          <div v-if="!profileEditing && user" class="space-y-4">
+            <div class="flex items-center gap-4 mb-4">
+              <img :src="assetUrl(user.avatar) || (user.githubId ? `https://avatars.githubusercontent.com/${user.githubId.replace('@', '')}` : '/default-avatar.svg')" class="w-16 h-16 rounded-full object-cover border-2 border-border" />
+              <div>
+                <p class="text-lg font-bold text-text-primary">{{ user.name || '(no name)' }}</p>
+                <p v-if="user.role" class="text-sm text-text-secondary">{{ user.role }}</p>
+              </div>
+            </div>
+            <p v-if="user.bio" class="text-sm text-text-secondary whitespace-pre-line">{{ user.bio }}</p>
+            <div v-if="user.themes?.length" class="flex flex-wrap gap-1.5">
+              <span v-for="t in user.themes" :key="t" class="text-[10px] px-2 py-0.5 bg-accent/10 text-accent rounded">{{ t }}</span>
+            </div>
+            <div v-if="user.preferredModel" class="text-xs text-text-muted">Model: <span class="text-text-secondary">{{ user.preferredModel }}</span></div>
+            <div class="pt-3 border-t border-border-subtle space-y-1.5">
+              <p v-if="user.githubId" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> {{ user.githubId }}</p>
+              <p v-if="user.discord" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419s.956-2.419 2.157-2.419 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419s.955-2.419 2.157-2.419 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg> {{ user.discord }}</p>
+              <p v-if="user.twitter" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> {{ user.twitter }}</p>
+              <p v-if="user.telegram" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> {{ user.telegram }}</p>
+              <p v-if="user.linkedin" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> {{ user.linkedin }}</p>
+              <p v-if="user.website" class="text-sm text-text-secondary flex items-center gap-2"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg> {{ user.website }}</p>
+              <p v-if="!user.githubId && !user.discord && !user.twitter && !user.telegram && !user.linkedin && !user.website" class="text-xs text-text-muted italic">No social links added yet.</p>
+            </div>
+            <div class="pt-3 border-t border-border-subtle">
+              <div class="flex items-center gap-2 text-xs text-text-muted">
+                <span>RSVP:</span>
+                <span v-if="user.confirmedAttendance === 'yes'" class="text-emerald-400 font-bold">Yes</span>
+                <span v-else-if="user.confirmedAttendance === 'no'" class="text-red-400 font-bold">No</span>
+                <span v-else class="text-amber-400">Not yet</span>
+              </div>
+              <div v-if="user.lookingForTeam && !user.teamId" class="text-xs text-emerald-400 mt-1">Looking for a team</div>
+            </div>
+            <div v-if="user && profileQr" class="flex flex-col items-center pt-4 mt-2 border-t border-border">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2">Your Identity QR Code</p>
+              <img :src="profileQr" class="w-28 h-28" />
+              <p class="text-[10px] text-text-muted mt-1">Show this at entrance for check-in</p>
+            </div>
+          </div>
 
-          <form @submit.prevent="saveProfile" class="space-y-4">
+          <!-- Edit Mode -->
+          <form v-if="profileEditing" @submit.prevent="saveProfile" class="space-y-4">
+          <div v-if="authError" class="mb-4 p-3 bg-badge-danger-bg border border-accent-red/30 text-badge-danger-text text-sm">{{ authError }}</div>
             <div>
               <label class="block text-sm text-text-secondary mb-1">Name</label>
               <input v-model="profileName" type="text" required :class="inputClass" />
@@ -883,11 +928,6 @@ async function saveProfile() {
             <button type="submit" :disabled="profileLoading" class="w-full py-3 bg-btn-bg text-btn-text text-sm font-semibold tracking-widest uppercase hover:bg-btn-hover transition-colors disabled:opacity-50">
               {{ profileLoading ? 'Saving...' : 'Save Profile' }}
             </button>
-            <div v-if="user && profileQr" class="flex flex-col items-center pt-4 mt-4 border-t border-border">
-              <p class="text-xs text-text-muted uppercase tracking-wider mb-2">Your Identity QR Code</p>
-              <img :src="profileQr" class="w-28 h-28" />
-              <p class="text-[10px] text-text-muted mt-1">Show this at entrance for check-in</p>
-            </div>
           </form>
         </div>
       </div>
