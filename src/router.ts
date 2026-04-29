@@ -5,6 +5,8 @@ import RulesPage from './pages/RulesPage.vue'
 import ProfilePage from './pages/ProfilePage.vue'
 import AdminPage from './pages/AdminPage.vue'
 import ExportPage from './pages/ExportPage.vue'
+import SubmitPage from './pages/SubmitPage.vue'
+import CheckinPage from './pages/CheckinPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +17,8 @@ const router = createRouter({
     { path: '/profile/:id', component: ProfilePage },
     { path: '/admin', component: AdminPage },
     { path: '/export', component: ExportPage },
+    { path: '/submit', component: SubmitPage },
+    { path: '/checkin', component: CheckinPage },
   ],
   scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) return savedPosition

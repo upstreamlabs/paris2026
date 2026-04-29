@@ -5,6 +5,7 @@ import { provideTheme } from './composables/useTheme'
 import AppHeader from './components/layout/AppHeader.vue'
 import AppFooter from './components/layout/AppFooter.vue'
 import InteractiveEffects from './components/effects/InteractiveEffects.vue'
+import AnnouncementBanner from './components/effects/AnnouncementBanner.vue'
 import LiveViewers from './components/effects/LiveViewers.vue'
 import SectionNav from './components/effects/SectionNav.vue'
 import BuildersModal from './components/effects/BuildersModal.vue'
@@ -43,6 +44,7 @@ watch(isLoggedIn, async (v) => {
 
 <template>
   <AppHeader />
+  <AnnouncementBanner />
   <RulesPage v-if="currentPath === '/rules'" />
   <router-view v-else />
   <AppFooter />

@@ -28,7 +28,7 @@ async function tryAuth() {
   if (data && data.value === inputHash) {
     sessionStorage.setItem('admin_authed', '1')
     authed.value = true
-    loadData()
+    loadData(); loadAnnouncement(); loadSubmissions()
   } else {
     passError.value = 'Wrong password'
   }
@@ -60,6 +60,26 @@ async function showQr(user: any) {
 
 // Team view modal
 const viewingTeam = ref<any>(null)
+
+// Announcement
+const announcementText = ref('')
+const announcementSaving = ref(false)
+async function loadAnnouncement() {
+  const { data } = await supabase.from('admin_config').select('value').eq('key', 'announcement').single()
+  announcementText.value = data?.value || ''
+}
+async function saveAnnouncement() {
+  announcementSaving.value = true
+  await supabase.from('admin_config').update({ value: announcementText.value }).eq('key', 'announcement')
+  announcementSaving.value = false
+}
+
+// Submissions
+const submissions = ref<any[]>([])
+async function loadSubmissions() {
+  const { data } = await supabase.from('submissions').select('*')
+  submissions.value = data || []
+}
 
 async function loadData() {
   loading.value = true
@@ -351,6 +371,32 @@ onMounted(() => { if (authed.value) loadData() })
           <p class="text-3xl font-bold text-emerald-400">{{ confirmedYes }}</p>
           <p class="text-xs text-gray-500 uppercase">RSVP Yes</p>
           <p class="text-[10px] text-gray-600 mt-1">{{ confirmedNo }} no · {{ confirmedPending }} pending</p>
+        </div>
+      </div>
+
+      <!-- Announcement Editor -->
+      <div class="mb-8 p-4 bg-gray-900 border border-amber-500/30">
+        <p class="text-xs text-amber-400 uppercase tracking-wider mb-2 font-bold">Live Announcement Banner</p>
+        <div class="flex gap-2">
+          <input v-model="announcementText" type="text" placeholder="Type announcement (empty = hidden)"
+            class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 text-white text-sm focus:border-amber-500 focus:outline-none" />
+          <button @click="saveAnnouncement" :disabled="announcementSaving"
+            class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-sm font-bold uppercase tracking-widest disabled:opacity-50">
+            {{ announcementSaving ? '...' : 'Push' }}
+          </button>
+        </div>
+        <p class="text-[10px] text-gray-600 mt-1">Updates instantly on the website via realtime. Clear text to hide.</p>
+      </div>
+
+      <!-- Submissions -->
+      <div v-if="submissions.length" class="mb-8 p-4 bg-gray-900 border border-gray-800">
+        <p class="text-xs text-gray-500 uppercase tracking-wider mb-3 font-bold">Submissions ({{ submissions.length }})</p>
+        <div v-for="s in submissions" :key="s.id" class="flex items-center justify-between py-2 border-b border-gray-800/50 last:border-0">
+          <div>
+            <p class="text-sm font-semibold">{{ teams.find(t => t.id === s.team_id)?.name || s.team_id }}</p>
+            <a :href="s.github_url" target="_blank" class="text-xs text-blue-400 hover:underline">{{ s.github_url }}</a>
+          </div>
+          <span class="text-[10px] text-gray-600">{{ new Date(s.submitted_at).toLocaleString() }}</span>
         </div>
       </div>
 
