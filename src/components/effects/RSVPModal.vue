@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useAuth } from '../../composables/useAuth'
+import { useRoute } from 'vue-router'
 import { supabase } from '../../lib/supabase'
 
 const { user, isLoggedIn } = useAuth()
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
 
 const show = ref(false)
 const saving = ref(false)
@@ -35,7 +38,7 @@ async function respond(answer: 'yes' | 'no') {
 <template>
   <Teleport to="body">
     <Transition enter-active-class="transition duration-300" enter-from-class="opacity-0" leave-active-class="transition duration-150" leave-to-class="opacity-0">
-      <div v-if="show && isLoggedIn && !alreadyAnswered" class="fixed inset-0 z-[210] flex items-center justify-center p-4">
+      <div v-if="isHome && show && isLoggedIn && !alreadyAnswered" class="fixed inset-0 z-[210] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" />
         <div class="relative w-full max-w-md bg-bg-primary border border-emerald-500/40 shadow-2xl p-6">
           <div class="text-center mb-5">

@@ -2,9 +2,12 @@
 import { ref, computed, watch } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useTeams } from '../../composables/useTeams'
+import { useRoute } from 'vue-router'
 
 const { user, isLoggedIn } = useAuth()
 const { teams, editTeam } = useTeams()
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
 
 const dismissed = ref(false)
 const saving = ref(false)
@@ -12,7 +15,7 @@ const justSaved = ref(false)
 
 const myLedTeam = computed(() => teams.value.find(t => t.leaderId === user.value?.id))
 const needsModel = computed(() =>
-  isLoggedIn.value && myLedTeam.value && !myLedTeam.value.model && !dismissed.value && !justSaved.value
+  isHome.value && isLoggedIn.value && myLedTeam.value && !myLedTeam.value.model && !dismissed.value && !justSaved.value
 )
 
 const models = [

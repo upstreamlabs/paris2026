@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuth } from '../../composables/useAuth'
+import { useRoute } from 'vue-router'
 
 const { isLoggedIn } = useAuth()
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
 const EB_URL = 'https://www.eventbrite.com/e/1984013840806/?discount=AGENTICHACKATHON26'
 const dismissed = ref(false)
 </script>
@@ -10,7 +13,7 @@ const dismissed = ref(false)
 <template>
   <Teleport to="body">
     <Transition enter-active-class="transition duration-300" enter-from-class="opacity-0" leave-active-class="transition duration-150" leave-to-class="opacity-0">
-      <div v-if="isLoggedIn && !dismissed" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+      <div v-if="isHome && isLoggedIn && !dismissed" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" />
         <div class="relative w-full max-w-md bg-bg-primary border border-accent-yellow/50 shadow-2xl p-6">
           <button @click="dismissed = true" class="absolute top-3 right-3 text-text-muted hover:text-text-primary">

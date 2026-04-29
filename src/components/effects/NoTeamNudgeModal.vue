@@ -2,10 +2,13 @@
 import { ref, computed, watch } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useTeams } from '../../composables/useTeams'
+import { useRoute } from 'vue-router'
 import { supabase } from '../../lib/supabase'
 
 const { user, isLoggedIn } = useAuth()
 const { teams, myInvitations } = useTeams()
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
 
 const dismissed = ref(false)
 const toggling = ref(false)
@@ -15,7 +18,8 @@ const hasTeam = computed(() => !!user.value?.teamId)
 const hasIncomingInvites = computed(() => myInvitations.value.length > 0)
 
 const shouldShow = computed(() =>
-  isLoggedIn.value
+  isHome.value
+  && isLoggedIn.value
   && user.value
   && !hasTeam.value
   && !dismissed.value
