@@ -41,7 +41,7 @@ watch(() => user.value?.id, () => {
 <template>
   <Teleport to="body">
     <Transition enter-active-class="transition duration-300" enter-from-class="opacity-0" leave-active-class="transition duration-150" leave-to-class="opacity-0">
-      <div v-if="needsModel" class="fixed inset-0 z-[180] flex items-center justify-center p-4">
+      <div v-if="needsModel" class="fixed inset-0 z-[190] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" />
         <div class="relative w-full max-w-lg bg-bg-primary border border-accent/30 shadow-2xl p-6">
           <button @click="dismiss" class="absolute top-3 right-3 text-text-muted hover:text-text-primary text-xs uppercase tracking-widest">
