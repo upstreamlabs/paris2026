@@ -372,11 +372,6 @@ async function manualAssign(userId: string, model: string) {
   await loadCodes()
 }
 
-async function revokeCode(codeId: string) {
-  await supabase.from('redeem_codes').update({ status: 'used', assigned_to: null, assigned_at: null }).eq('id', codeId)
-  await loadCodes()
-}
-
 async function replaceCode(userId: string, oldCodeId: string, model: string) {
   await supabase.from('redeem_codes').update({ status: 'used', assigned_to: null, assigned_at: null }).eq('id', oldCodeId)
   const available = redeemCodes.value.find((c: any) => c.model === model && c.status === 'available')
