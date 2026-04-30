@@ -563,6 +563,34 @@ onMounted(() => { if (authed.value) loadData() })
             </div>
           </div>
         </div>
+
+        <!-- Full code list -->
+        <details class="mt-4">
+          <summary class="text-xs text-gray-500 cursor-pointer hover:text-gray-300">View all codes ({{ redeemCodes.length }})</summary>
+          <div class="mt-2 max-h-64 overflow-y-auto">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="text-gray-600 uppercase border-b border-gray-800">
+                  <th class="py-1 px-2 text-left">Code</th>
+                  <th class="py-1 px-2 text-left">Model</th>
+                  <th class="py-1 px-2 text-left">Status</th>
+                  <th class="py-1 px-2 text-left">Assigned To</th>
+                  <th class="py-1 px-2 text-left">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="c in redeemCodes" :key="c.id" class="border-b border-gray-800/30"
+                  :class="c.status === 'assigned' ? 'text-blue-400' : c.status === 'used' ? 'text-gray-600 line-through' : 'text-emerald-400'">
+                  <td class="py-1 px-2 font-mono">{{ c.code }}</td>
+                  <td class="py-1 px-2">{{ c.model }}</td>
+                  <td class="py-1 px-2">{{ c.status }}</td>
+                  <td class="py-1 px-2">{{ c.assigned_to ? (profiles.find((p: any) => p.id === c.assigned_to)?.name || c.assigned_to) : '—' }}</td>
+                  <td class="py-1 px-2 text-gray-600">{{ c.assigned_at ? new Date(c.assigned_at).toLocaleString() : '—' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
       </div>
 
       <!-- Stats Row 2: Breakdown -->
