@@ -398,7 +398,7 @@ async function dissolveTeam(team: any) {
   teams.value = teams.value.filter(t => t.id !== team.id)
 }
 
-onMounted(() => { if (authed.value) loadData() })
+onMounted(() => { if (authed.value) { loadData(); loadAnnouncement(); loadSubmissions(); loadCodes() } })
 </script>
 
 <template>
