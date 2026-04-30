@@ -28,7 +28,7 @@ async function tryAuth() {
   if (data && data.value === inputHash) {
     sessionStorage.setItem('admin_authed', '1')
     authed.value = true
-    loadData(); loadAnnouncement(); loadSubmissions()
+    loadData(); loadAnnouncement(); loadSubmissions(); loadCodes()
   } else {
     passError.value = 'Wrong password'
   }
@@ -320,6 +320,73 @@ async function saveEdit() {
   editingUser.value = null
 }
 
+// Redeem codes
+const redeemCodes = ref<any[]>([])
+const importModel = ref('MiniMax')
+const importText = ref('')
+
+async function loadCodes() {
+  const { data } = await supabase.from('redeem_codes').select('*').order('created_at')
+  redeemCodes.value = data || []
+}
+
+const codeStats = computed(() => {
+  const s: Record<string, { total: number; available: number; assigned: number; used: number }> = {}
+  for (const c of redeemCodes.value) {
+    if (!s[c.model]) s[c.model] = { total: 0, available: 0, assigned: 0, used: 0 }
+    s[c.model].total++
+    s[c.model][c.status as 'available' | 'assigned' | 'used']++
+  }
+  return s
+})
+
+async function importCodes() {
+  const codes = importText.value.split('\n').map((c: string) => c.trim()).filter(Boolean)
+  if (!codes.length) return
+  const rows = codes.map(code => ({ code, model: importModel.value }))
+  await supabase.from('redeem_codes').insert(rows)
+  importText.value = ''
+  await loadCodes()
+}
+
+async function autoAssignCodes() {
+  const checkedInUsers = profiles.value.filter((p: any) => p.checked_in && p.team_id)
+  for (const p of checkedInUsers) {
+    const team = teams.value.find((t: any) => t.id === p.team_id)
+    if (!team || !['MiniMax', 'Kimi'].includes(team.model)) continue
+    const alreadyHas = redeemCodes.value.find((c: any) => c.assigned_to === p.id && c.status === 'assigned')
+    if (alreadyHas) continue
+    const available = redeemCodes.value.find((c: any) => c.model === team.model && c.status === 'available')
+    if (!available) continue
+    await supabase.from('redeem_codes').update({ status: 'assigned', assigned_to: p.id, assigned_at: new Date().toISOString() }).eq('id', available.id)
+  }
+  await loadCodes()
+}
+
+async function manualAssign(userId: string, model: string) {
+  const available = redeemCodes.value.find((c: any) => c.model === model && c.status === 'available')
+  if (!available) { alert('No available codes for ' + model); return }
+  await supabase.from('redeem_codes').update({ status: 'assigned', assigned_to: userId, assigned_at: new Date().toISOString() }).eq('id', available.id)
+  await loadCodes()
+}
+
+async function revokeCode(codeId: string) {
+  await supabase.from('redeem_codes').update({ status: 'used', assigned_to: null, assigned_at: null }).eq('id', codeId)
+  await loadCodes()
+}
+
+async function replaceCode(userId: string, oldCodeId: string, model: string) {
+  await supabase.from('redeem_codes').update({ status: 'used', assigned_to: null, assigned_at: null }).eq('id', oldCodeId)
+  const available = redeemCodes.value.find((c: any) => c.model === model && c.status === 'available')
+  if (!available) { alert('No available codes for ' + model); await loadCodes(); return }
+  await supabase.from('redeem_codes').update({ status: 'assigned', assigned_to: userId, assigned_at: new Date().toISOString() }).eq('id', available.id)
+  await loadCodes()
+}
+
+function getUserCode(userId: string) {
+  return redeemCodes.value.find((c: any) => c.assigned_to === userId && c.status === 'assigned')
+}
+
 // kickUser removed — use Supabase Dashboard for deletions
 
 async function dissolveTeam(team: any) {
@@ -444,6 +511,57 @@ onMounted(() => { if (authed.value) loadData() })
             <a :href="s.github_url" target="_blank" class="text-xs text-blue-400 hover:underline">{{ s.github_url }}</a>
           </div>
           <span class="text-[10px] text-gray-600">{{ new Date(s.submitted_at).toLocaleString() }}</span>
+        </div>
+      </div>
+
+      <!-- Redeem Codes -->
+      <div class="mb-8 p-4 bg-gray-900 border border-gray-800">
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-xs text-gray-500 uppercase tracking-wider font-bold">Redeem Codes</p>
+          <button @click="autoAssignCodes" class="px-3 py-1 bg-emerald-700 hover:bg-emerald-600 text-xs font-bold uppercase tracking-widest">Auto-assign All</button>
+        </div>
+
+        <!-- Code stats -->
+        <div class="flex gap-4 mb-4">
+          <div v-for="(s, model) in codeStats" :key="model" class="text-xs">
+            <span class="text-white font-bold">{{ model }}</span>:
+            <span class="text-emerald-400">{{ s.available }} free</span> /
+            <span class="text-blue-400">{{ s.assigned }} assigned</span> /
+            <span class="text-gray-500">{{ s.used }} used</span>
+          </div>
+        </div>
+
+        <!-- Import -->
+        <div class="flex gap-2 mb-4">
+          <select v-model="importModel" class="px-2 py-1 bg-gray-800 border border-gray-700 text-white text-xs">
+            <option>MiniMax</option>
+            <option>Kimi</option>
+          </select>
+          <textarea v-model="importText" rows="2" placeholder="Paste codes, one per line..."
+            class="flex-1 px-2 py-1 bg-gray-800 border border-gray-700 text-white text-xs focus:border-amber-500 focus:outline-none"></textarea>
+          <button @click="importCodes" :disabled="!importText.trim()" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-xs font-bold uppercase disabled:opacity-50">Import</button>
+        </div>
+
+        <!-- Assigned users -->
+        <div class="space-y-1 max-h-48 overflow-y-auto">
+          <div v-for="p in profiles.filter((p: any) => p.checked_in && p.team_id)" :key="'code-'+p.id"
+            class="flex items-center justify-between py-1.5 px-2 text-xs border-b border-gray-800/50">
+            <div class="flex items-center gap-2">
+              <span class="text-white">{{ p.name }}</span>
+              <span class="text-gray-600">{{ teams.find((t: any) => t.id === p.team_id)?.model || '?' }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <template v-if="getUserCode(p.id)">
+                <code class="text-emerald-400 text-[10px] font-mono">{{ getUserCode(p.id).code }}</code>
+                <button @click="replaceCode(p.id, getUserCode(p.id).id, teams.find((t: any) => t.id === p.team_id)?.model)" class="text-amber-400 hover:text-amber-300 text-[10px]">Replace</button>
+                <button @click="revokeCode(getUserCode(p.id).id)" class="text-red-400 hover:text-red-300 text-[10px]">Revoke</button>
+              </template>
+              <template v-else-if="['MiniMax','Kimi'].includes(teams.find((t: any) => t.id === p.team_id)?.model)">
+                <button @click="manualAssign(p.id, teams.find((t: any) => t.id === p.team_id)?.model)" class="text-blue-400 hover:text-blue-300 text-[10px]">Assign</button>
+              </template>
+              <span v-else class="text-gray-600 text-[10px]">RouteTokens</span>
+            </div>
+          </div>
         </div>
       </div>
 

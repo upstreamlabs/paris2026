@@ -48,6 +48,7 @@ function profileRowToUser(row: Record<string, any>): User {
     lookingForTeam: row.looking_for_team ?? false,
     passwordChanged: row.password_changed ?? false,
     confirmedAttendance: row.confirmed_attendance ?? null,
+    checkedIn: row.checked_in ?? false,
     createdAt: row.created_at ?? '',
   }
 }

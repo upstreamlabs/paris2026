@@ -6,6 +6,7 @@ import { useTheme } from '../../composables/useTheme'
 import { useTeams } from '../../composables/useTeams'
 import { assetUrl } from '../../composables/api'
 import QRCode from 'qrcode'
+import { supabase } from '../../lib/supabase'
 
 const { t, locale, toggleLocale } = useI18n()
 const { user, isLoggedIn, login, register, logout, updateProfile, changePassword, sendPasswordReset, error: authError, showAuthModal, authModalTab, showChangePasswordModal } = useAuth()
@@ -278,6 +279,13 @@ function goToMyTeam() {
 }
 
 const profileQr = ref('')
+const myRedeemCode = ref<any>(null)
+
+async function loadMyCode() {
+  if (!user.value) { myRedeemCode.value = null; return }
+  const { data } = await supabase.from('redeem_codes').select('code, model').eq('assigned_to', user.value.id).eq('status', 'assigned').single()
+  myRedeemCode.value = data || null
+}
 
 async function openProfileModal() {
   showUserDropdown.value = false
@@ -301,6 +309,7 @@ async function openProfileModal() {
   }
   profileEditing.value = false
   showProfileModal.value = true
+  loadMyCode()
 }
 
 function toggleProfileTheme(id: string) {
@@ -793,6 +802,26 @@ async function saveProfile() {
               </div>
               <div v-if="user.lookingForTeam && !user.teamId" class="text-xs text-emerald-400 mt-1">Looking for a team</div>
             </div>
+            <!-- API Credits (checked-in users with team only) -->
+            <div v-if="user && user.checkedIn && user.teamId" class="pt-3 border-t border-border-subtle">
+              <p class="text-xs text-text-muted uppercase tracking-wider mb-2">API Credits</p>
+              <template v-if="myRedeemCode">
+                <p class="text-sm text-text-secondary mb-1">Your <strong class="text-text-primary">{{ myRedeemCode.model }}</strong> redemption code:</p>
+                <code class="block px-3 py-2 bg-bg-secondary border border-accent/30 text-accent font-mono text-sm select-all mb-2">{{ myRedeemCode.code }}</code>
+                <a v-if="myRedeemCode.model === 'MiniMax'" href="https://platform.minimax.io/docs/guides/pricing-token-plan" target="_blank" class="text-xs text-accent hover:underline">→ Redeem on MiniMax Platform</a>
+                <a v-else-if="myRedeemCode.model === 'Kimi'" href="https://platform.kimi.ai/docs/api/overview" target="_blank" class="text-xs text-accent hover:underline">→ Redeem on Kimi Platform</a>
+              </template>
+              <template v-else-if="myTeam && ['GLM','DeepSeek'].includes(myTeam.model || '')">
+                <p class="text-sm text-text-secondary mb-2">Register on RouteTokens to get your API credits:</p>
+                <a href="https://portal.routetokens.com/" target="_blank" class="block px-3 py-2 bg-bg-secondary border border-accent/30 text-accent text-sm hover:bg-accent/5 transition-colors mb-1">→ portal.routetokens.com</a>
+                <p class="text-[11px] text-amber-400 mb-1">用你在我们网站注册的邮箱注册，否则可能在获取 token 的时候遇到问题</p>
+                <a href="https://docs.routetokens.com/" target="_blank" class="text-[10px] text-text-muted hover:text-text-secondary">Documentation →</a>
+              </template>
+              <template v-else>
+                <p class="text-xs text-text-muted">Please contact staff on-site to get your API credits.</p>
+              </template>
+            </div>
+
             <div v-if="user && profileQr" class="flex flex-col items-center pt-4 mt-2 border-t border-border">
               <p class="text-xs text-text-muted uppercase tracking-wider mb-2">Your Identity QR Code</p>
               <img :src="profileQr" class="w-28 h-28" />
