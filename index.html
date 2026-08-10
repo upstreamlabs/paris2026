@@ -1,25 +1,30 @@
-+<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <link rel="canonical" href="https://hackathon.gosim.org/agentic-hackathon-paris-2026/" />
-    <meta http-equiv="refresh" content="0; url=https://hackathon.gosim.org/agentic-hackathon-paris-2026/" />
-    <title>GOSIM Agentic Hackathon 2026 — Paris</title>
+    <link rel="canonical" href="https://create.gosim.org/" />
+    <meta http-equiv="refresh" content="0; url=https://create.gosim.org/" />
+    <title>GOSIM Create has moved</title>
   </head>
   <body>
     <p>
-      This event has moved to
-      <a href="https://hackathon.gosim.org/agentic-hackathon-paris-2026/">
-        hackathon.gosim.org/agentic-hackathon-paris-2026
-      </a>.
+      GOSIM Create has moved to
+      <a href="https://create.gosim.org/">create.gosim.org</a>.
     </p>
     <script>
       (function () {
-        var destination = 'https://hackathon.gosim.org/agentic-hackathon-paris-2026'
-        var suffix = window.location.pathname === '/' ? '/' : window.location.pathname
-        window.location.replace(destination + suffix + window.location.search + window.location.hash)
+        var path = window.location.pathname
+        var oldEventBase = '/oaic-harness-2026'
+
+        if (path === oldEventBase || path.indexOf(oldEventBase + '/') === 0) {
+          path = '/factory26' + path.slice(oldEventBase.length)
+        }
+
+        window.location.replace(
+          'https://create.gosim.org' + path + window.location.search + window.location.hash,
+        )
       })()
     </script>
   </body>
